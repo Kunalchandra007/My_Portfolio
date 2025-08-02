@@ -30,7 +30,7 @@ const Resume = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/Kunal Resume till 3rd july Final.pdf"
+                href="/Kunal Resume till 3rd August.pdf"
                 download="Kunal_Chandra_Resume.pdf"
                 className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 border border-cyan-400/30"
               >
@@ -39,7 +39,7 @@ const Resume = () => {
               </a>
               
               <a
-                href="/Kunal Resume till 3rd july Final.pdf"
+                href="/Kunal Resume till 3rd August.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 border-2 border-cyan-400/50 text-cyan-400 px-8 py-3 rounded-full font-semibold hover:bg-cyan-400/10 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
@@ -50,7 +50,7 @@ const Resume = () => {
             </div>
             
             <div className="mt-8 text-sm text-gray-500">
-              <p className="font-mono">PDF Format • Last Updated: July 2024</p>
+              <p className="font-mono">PDF Format • Last Updated: August 2024</p>
             </div>
           </div>
         </div>

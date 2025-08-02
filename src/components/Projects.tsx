@@ -6,6 +6,24 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "SMARTFLOW - Intelligent Traffic Signal Control System",
+      description: "AI-based real-time traffic density analysis system that dynamically adjusts signal timings using YOLOv8 for vehicle detection, traffic density estimation, and backend signal adjustment for smoother traffic management.",
+      image: "/trafficlight.jpg",
+      tags: ["Python", "YOLOv8", "Computer Vision", "IoT", "ESP32", "React"],
+      category: "ML",
+      github: "https://github.com/Kunalchandra007/SMARTFLOW",
+      demo: "https://github.com/Kunalchandra007/SMARTFLOW"
+    },
+    {
+      title: "Edux",
+      description: "An AI-powered educational chatbot platform using Python, Flask, SQLite, and Ollama models. Features prompt engineering, privacy-first AI, and analytics dashboard.",
+      image: "/edux.png",
+      tags: ["Python", "Flask", "AI", "Chatbot", "Ollama"],
+      category: "Data Science",
+      github: "https://github.com/Kunalchandra007/Edux",
+      demo: "https://github.com/Kunalchandra007/Edux"
+    },
+    {
       title: "Sentiment Analysis on IMDB Dataset",
       description: "Advanced sentiment analysis using machine learning techniques on movie reviews from IMDB dataset with high accuracy classification.",
       image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -33,24 +51,6 @@ const Projects = () => {
       demo: "https://github.com/Kunalchandra007/Customer_churn_prediction"
     },
     {
-      title: "My Portfolio",
-      description: "A personal portfolio website built with React, Vite, and Tailwind CSS to showcase my projects, skills, and experience.",
-      image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800",
-      tags: ["React", "Vite", "Tailwind CSS", "Portfolio"],
-      category: "Data Science",
-      github: "https://github.com/Kunalchandra007",
-      demo: "https://github.com/Kunalchandra007"
-    },
-    {
-      title: "Spotify-Clonee",
-      description: "A frontend clone of the Spotify homepage, built with HTML and CSS. Focuses on layout, design, and responsive UI.",
-      image: "/spotify.png",
-      tags: ["HTML", "CSS", "Frontend", "Clone"],
-      category: "Data Science",
-      github: "https://github.com/Kunalchandra007/Spotify-Clonee",
-      demo: "https://github.com/Kunalchandra007/Spotify-Clonee"
-    },
-    {
       title: "YouTube Slide Extractor",
       description: "A Python desktop app that extracts slide-like frames from educational YouTube videos and compiles them into a downloadable PDF. Features OCR, keyframe extraction, and a Tkinter GUI.",
       image: "/youtube.png",
@@ -60,13 +60,13 @@ const Projects = () => {
       demo: "https://github.com/Kunalchandra007/YouTube-Slide-Extractor"
     },
     {
-      title: "Edux",
-      description: "An AI-powered educational chatbot platform using Python, Flask, SQLite, and Ollama models. Features prompt engineering, privacy-first AI, and analytics dashboard.",
-      image: "/edux.png",
-      tags: ["Python", "Flask", "AI", "Chatbot", "Ollama"],
+      title: "My Portfolio",
+      description: "A personal portfolio website built with React, Vite, and Tailwind CSS to showcase my projects, skills, and experience.",
+      image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800",
+      tags: ["React", "Vite", "Tailwind CSS", "Portfolio"],
       category: "Data Science",
-      github: "https://github.com/Kunalchandra007/Edux",
-      demo: "https://github.com/Kunalchandra007/Edux"
+      github: "https://github.com/Kunalchandra007",
+      demo: "https://github.com/Kunalchandra007"
     }
   ];
 

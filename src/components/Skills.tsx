@@ -7,89 +7,45 @@ const Skills = () => {
       icon: <Code className="w-8 h-8 text-cyan-400" />,
       title: "Languages",
       skills: [
-        { name: "Python", level: 95 },
-        { name: "Java", level: 90 },
-        { name: "C", level: 85 },
-        { name: "JavaScript", level: 90 },
-        { name: "HTML", level: 95 },
-        { name: "CSS", level: 90 }
+        "Python", "Java", "C", "JavaScript", "HTML", "CSS"
       ]
     },
     {
       icon: <Wrench className="w-8 h-8 text-blue-400" />,
       title: "Developer Tools",
       skills: [
-        { name: "Jupyter Notebook", level: 95 },
-        { name: "VS Code", level: 95 },
-        { name: "GitHub", level: 90 },
-        { name: "Anaconda", level: 90 },
-        { name: "Google Colab", level: 90 }
+        "Jupyter Notebook", "VS Code", "GitHub", "Anaconda", "Google Colab"
       ]
     },
     {
       icon: <Brain className="w-8 h-8 text-purple-400" />,
       title: "Frameworks & Libraries",
       skills: [
-        { name: "Scikit-learn", level: 90 },
-        { name: "TensorFlow", level: 90 },
-        { name: "Keras", level: 90 },
-        { name: "PyTorch", level: 85 },
-        { name: "ReactJS", level: 90 },
-        { name: "Node.js", level: 85 },
-        { name: "Express.js", level: 85 }
+        "Scikit-learn", "TensorFlow", "Keras", "PyTorch", "ReactJS", "Node.js", "Express.js"
       ]
     },
     {
       icon: <Database className="w-8 h-8 text-pink-400" />,
       title: "Technologies",
       skills: [
-        { name: "Pandas", level: 95 },
-        { name: "NumPy", level: 95 },
-        { name: "Matplotlib", level: 90 },
-        { name: "Seaborn", level: 90 },
-        { name: "OpenCV", level: 85 },
-        { name: "NLTK", level: 85 }
+        "Pandas", "NumPy", "Matplotlib", "Seaborn", "OpenCV", "NLTK"
       ]
     },
     {
       icon: <Database className="w-8 h-8 text-green-400" />,
       title: "Databases",
       skills: [
-        { name: "MongoDB", level: 85 },
-        { name: "MySQL", level: 85 },
-        { name: "SQL", level: 85 }
+        "MongoDB", "MySQL", "SQL"
       ]
     },
     {
       icon: <Wrench className="w-8 h-8 text-yellow-400" />,
       title: "Other Tools",
       skills: [
-        { name: "Flask", level: 85 },
-        { name: "Streamlit", level: 85 },
-        { name: "Docker", level: 80 },
-        { name: "Git", level: 90 },
-        { name: "Bootstrap", level: 85 },
-        { name: "REST APIs", level: 85 }
+        "Flask", "Streamlit", "Docker", "Git", "Bootstrap", "REST APIs"
       ]
     }
   ];
-
-  const SkillBar = ({ name, level }: { name: string; level: number }) => (
-    <div className="mb-4">
-      <div className="flex justify-between mb-2">
-        <span className="text-sm font-medium text-gray-300">{name}</span>
-        <span className="text-sm text-cyan-400 font-mono">{level}%</span>
-      </div>
-      <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
-        <div
-          className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000 ease-out relative"
-          style={{ width: `${level}%` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <section id="skills" className="py-20 bg-black relative overflow-hidden">
@@ -105,7 +61,7 @@ const Skills = () => {
             Technical <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Skills</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            A comprehensive overview of my technical skills and proficiency levels across various domains.
+            A comprehensive overview of my technical skills across various domains.
           </p>
         </div>
 
@@ -118,9 +74,16 @@ const Skills = () => {
                 </div>
                 <h3 className="text-2xl font-semibold text-white ml-3 group-hover:text-cyan-400 transition-colors duration-300">{category.title}</h3>
               </div>
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
                 {category.skills.map((skill, skillIndex) => (
-                  <SkillBar key={skillIndex} name={skill.name} level={skill.level} />
+                  <div 
+                    key={skillIndex} 
+                    className="bg-gray-800/50 border border-gray-700/50 rounded-lg px-4 py-3 text-center hover:border-cyan-400/50 hover:bg-gray-800/70 transition-all duration-300 group/skill"
+                  >
+                    <span className="text-gray-300 group-hover/skill:text-cyan-400 font-medium transition-colors duration-300">
+                      {skill}
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>

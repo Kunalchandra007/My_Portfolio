@@ -12,12 +12,12 @@ const Certificates = () => {
       learning: "Strengthened Java fundamentals and problem-solving skills."
     },
     {
-      name: "Web Development",
-      organization: "Apna College",
-      date: "2023",
-      description: "Hands-on training in HTML, CSS, JavaScript, and modern web frameworks for building responsive websites.",
-      image: "/Webdev.jpeg",
-      learning: "Built several web projects and learned best practices in frontend development."
+      name: "Summer Analytics 2025",
+      organization: "IIT Guwahati",
+      date: "2025",
+      description: "Participated in and successfully completed the 6-week 'Summer Analytics 2025' program organized by the Consulting & Analytics Club, IIT Guwahati. The program provided hands-on experience and a deep dive into the fields of Data Science and Machine Learning.",
+      image: "/summer.jpg",
+      learning: "Gained comprehensive knowledge in Data Science and Machine Learning through hands-on projects and industry exposure."
     },
     {
       name: "DSA in Java",
@@ -42,6 +42,22 @@ const Certificates = () => {
       description: "Completed a Power BI training course with practical exercises and real-world data visualization projects.",
       image: "/ducat india.jpeg",
       learning: "Enhanced data visualization and dashboarding skills using Power BI."
+    },
+    {
+      name: "GirlScript Summer of Code 2025",
+      organization: "GirlScript Foundation",
+      date: "2025",
+      description: "Contributed to GirlScript Summer of Code 2025, a prominent open-source program. This experience involved collaborating with a team to contribute to an open-source project, enhancing my practical coding skills and understanding of version control systems.",
+      image: "/gssoc.jpg",
+      learning: "Gained hands-on experience in open-source development, version control, and collaborative coding practices."
+    },
+    {
+      name: "Web Development",
+      organization: "Apna College",
+      date: "2023",
+      description: "Hands-on training in HTML, CSS, JavaScript, and modern web frameworks for building responsive websites.",
+      image: "/Webdev.jpeg",
+      learning: "Built several web projects and learned best practices in frontend development."
     },
     {
       name: "AI & ML Internship",
