@@ -9,32 +9,35 @@ import Certificates from './components/Certificates';
 import Resume from './components/Resume';
 import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   return (
-    <div className="min-h-screen bg-black">
-      <Header />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Certificates />
-      <Resume />
-      <Contact />
-      <ScrollToTop />
-      
-      {/* Footer */}
-      <footer className="bg-gray-900 border-t border-gray-800 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-gray-400">
-              © 2025 Kunal Chandra. All rights reserved. Built with <span className="text-red-400">❤️</span>
-            </p>
+    <ThemeProvider>
+      <div className="min-h-screen bg-black dark:bg-black bg-white transition-colors duration-300">
+        <Header />
+        <Hero />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Certificates />
+        <Resume />
+        <Contact />
+        <ScrollToTop />
+        
+        {/* Footer */}
+        <footer className="bg-gray-900 dark:bg-gray-900 bg-gray-100 border-t border-gray-800 dark:border-gray-800 border-gray-200 text-white dark:text-white text-gray-900 py-8 transition-colors duration-300">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <p className="text-gray-400 dark:text-gray-400 text-gray-600">
+                © 2025 Kunal Chandra. All rights reserved. Built with <span className="text-red-400">❤️</span>
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </ThemeProvider>
   );
 }
 
