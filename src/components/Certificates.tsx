@@ -1,8 +1,34 @@
 import React, { useState } from 'react';
-import { Award, ExternalLink, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { Award, ChevronDown, ChevronUp } from 'lucide-react';
 
 const Certificates = () => {
   const [expandedCertificates, setExpandedCertificates] = useState<Set<number>>(new Set());
+  
+  // Enhanced tilt and glow effect handler
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget as HTMLDivElement;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Enhanced tilt effect
+    const rotateX = (y - centerY) / 8;
+    const rotateY = (centerX - x) / 8;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.08, 1.08, 1.08)`;
+    
+    // Glow effect
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  };
+  
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget as HTMLDivElement;
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  };
 
   const toggleExpanded = (index: number) => {
     const newExpanded = new Set(expandedCertificates);
@@ -118,81 +144,90 @@ const Certificates = () => {
   ];
 
   return (
-    <section id="certificates" className="py-20 bg-black dark:bg-black bg-white relative overflow-hidden transition-colors duration-300">
-      {/* Animated background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-purple-500/5 dark:bg-purple-500/5 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-cyan-500/5 dark:bg-cyan-500/5 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
+    <section id="certificates" className="py-20 bg-black relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 
           className="text-center mb-16"
           data-aos="fade-up"
           data-aos-duration="800"
         >
-          <h2 className="text-4xl font-bold text-white dark:text-white text-gray-900 mb-4">
-            Certificates & <span className="bg-gradient-to-r from-purple-400 to-pink-500 dark:from-purple-400 dark:to-pink-500 from-purple-600 to-pink-600 bg-clip-text text-transparent">Achievements</span>
+          <h2 className="text-4xl font-bold text-white mb-4">
+            Certificates & <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Achievements</span>
           </h2>
-          <p className="text-xl text-gray-300 dark:text-gray-300 text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Professional certifications and courses that demonstrate my commitment to continuous learning and skill development.
           </p>
         </div>
 
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {certificates.map((cert, index) => (
-            <div 
-              key={index} 
-              className="bg-gray-900/50 dark:bg-gray-900/50 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-700/50 dark:border-gray-700/50 border-gray-200/50 overflow-hidden hover:border-purple-500/30 dark:hover:border-purple-500/30 hover:border-purple-500/30 hover:bg-gray-900/70 dark:hover:bg-gray-900/70 hover:bg-white/70 transition-all duration-300 group"
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay={`${200 + index * 100}`}
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={cert.image}
-                  alt={cert.name}
-                  className="w-full h-48 object-contain bg-black group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-                  onClick={() => window.open(cert.image, '_blank')}
+              <div 
+                key={index}
+                className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden hover:border-yellow-400/50 hover:bg-gray-900/70 transition-all duration-300 group cursor-pointer relative"
+                data-aos="fade-up"
+                data-aos-duration="600"
+                data-aos-delay={`${200 + index * 100}`}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  '--mouse-x': '50%',
+                  '--mouse-y': '50%'
+                } as React.CSSProperties}
+              >
+                {/* Enhanced glow effect overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-20 opacity-0 group-hover:opacity-100 rounded-xl"
+                  style={{
+                    background: 'radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(255,215,0,0.15), rgba(255,255,255,0.05) 40%, transparent 70%)'
+                  }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
-                <div className="absolute top-4 right-4">
-                  <div className="bg-yellow-500/20 backdrop-blur-sm p-2 rounded-full border border-yellow-500/30">
-                    <Award className="w-6 h-6 text-yellow-400" />
+                <div className="relative overflow-hidden">
+                  <img
+                    src={cert.image}
+                    alt={cert.name}
+                    className="w-full h-48 object-contain bg-gray-800 group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    onClick={() => window.open(cert.image, '_blank')}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-yellow-500/20 backdrop-blur-sm p-2 rounded-full border border-yellow-500/30">
+                      <Award className="w-6 h-6 text-yellow-400" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-white dark:text-white text-gray-900 mb-2 group-hover:text-purple-400 dark:group-hover:text-purple-400 group-hover:text-purple-600 transition-colors duration-300">{cert.name}</h3>
-                <p className="text-cyan-400 dark:text-cyan-400 text-blue-600 font-medium mb-2">{cert.organization}</p>
-                <p className="text-gray-500 dark:text-gray-500 text-gray-600 text-sm mb-3 font-mono">{cert.date}</p>
-                <p className="text-gray-400 dark:text-gray-400 text-gray-600 mb-4">
-                  {expandedCertificates.has(index) ? cert.description : truncateDescription(cert.description)}
-                </p>
-                {cert.description.length > 200 && (
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-gray-200 transition-colors duration-300">{cert.name}</h3>
+                  <p className="text-gray-300 font-medium mb-2">{cert.organization}</p>
+                  <p className="text-gray-500 text-sm mb-3 font-mono">{cert.date}</p>
+                  <p className="text-gray-400 mb-4">
+                    {expandedCertificates.has(index) ? cert.description : truncateDescription(cert.description)}
+                  </p>
+                  {cert.description.length > 200 && (
+                    <button
+                      onClick={() => toggleExpanded(index)}
+                      className="flex items-center space-x-1 text-white hover:text-gray-300 transition-colors duration-300 mb-4"
+                    >
+                      <span className="text-sm font-medium">
+                        {expandedCertificates.has(index) ? 'Read Less' : 'Read More'}
+                      </span>
+                      {expandedCertificates.has(index) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    </button>
+                  )}
+                  <p className="text-gray-300 italic mb-2">{cert.learning}</p>
                   <button
-                    onClick={() => toggleExpanded(index)}
-                    className="flex items-center space-x-1 text-purple-400 dark:text-purple-400 text-purple-600 hover:text-purple-300 dark:hover:text-purple-300 hover:text-purple-500 transition-colors duration-300 mb-4"
+                    className="mt-2 px-4 py-1 bg-white text-black rounded hover:bg-gray-200 transition"
+                    onClick={() => window.open(cert.image, '_blank')}
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
+                    data-aos-delay={`${400 + index * 100}`}
                   >
-                    <span className="text-sm font-medium">
-                      {expandedCertificates.has(index) ? 'Read Less' : 'Read More'}
-                    </span>
-                    {expandedCertificates.has(index) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    View Full Image
                   </button>
-                )}
-                <p className="text-gray-300 dark:text-gray-300 text-gray-700 italic mb-2">{cert.learning}</p>
-                <button
-                  className="mt-2 px-4 py-1 bg-cyan-600 dark:bg-cyan-600 bg-blue-600 text-white rounded hover:bg-cyan-700 dark:hover:bg-cyan-700 hover:bg-blue-700 transition"
-                  onClick={() => window.open(cert.image, '_blank')}
-                  data-aos="zoom-in"
-                  data-aos-duration="400"
-                  data-aos-delay={`${400 + index * 100}`}
-                >
-                  View Full Image
-                </button>
+                </div>
               </div>
-            </div>
           ))}
         </div>
       </div>

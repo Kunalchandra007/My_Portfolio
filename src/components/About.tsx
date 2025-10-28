@@ -32,9 +32,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gray-900 dark:bg-gray-900 bg-gray-50 relative overflow-hidden transition-colors duration-300">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(6,182,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.02)_1px,transparent_1px)] bg-[linear-gradient(rgba(59,130,246,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.05)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+    <section id="about" className="py-20 bg-black relative overflow-hidden">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 
@@ -42,10 +40,10 @@ const About = () => {
           data-aos="fade-up"
           data-aos-duration="800"
         >
-          <h2 className="text-4xl font-bold text-white dark:text-white text-gray-900 mb-4">
-            About <span className="bg-gradient-to-r from-cyan-400 to-blue-500 dark:from-cyan-400 dark:to-blue-500 from-blue-600 to-indigo-600 bg-clip-text text-transparent">Me</span>
+          <h2 className="text-4xl font-bold text-white mb-4">
+            About <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Me</span>
           </h2>
-          <p className="text-xl text-gray-300 dark:text-gray-300 text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Passionate about leveraging data to solve real-world problems and create meaningful impact through technology.
           </p>
         </div>

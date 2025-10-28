@@ -1,5 +1,4 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+
 import { Building2, Calendar, MapPin, ExternalLink } from 'lucide-react';
 
 const Experience = () => {
@@ -32,20 +31,20 @@ const Experience = () => {
         "API Integration – Integrated backend APIs for seamless product display, user authentication, and cart functionality.",
         "Performance Optimization – Optimized website speed and responsiveness for better user engagement and SEO ranking."
       ],
-      type: "job"
+      type: "internship"
     }
   ];
 
   return (
-    <section id="experience" className="py-20 bg-gray-900 dark:bg-gray-900 bg-gray-50 relative overflow-hidden transition-colors duration-300">
+    <section id="experience" className="py-20 bg-black relative overflow-hidden">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 
           className="text-center mb-16"
           data-aos="fade-up"
           data-aos-duration="800"
         >
-          <h2 className="text-4xl font-bold text-white dark:text-white text-gray-900 mb-4">Experience</h2>
-          <p className="text-gray-300 dark:text-gray-300 text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-4">Experience</h2>
+          <p className="text-gray-300 max-w-2xl mx-auto">
             My professional journey in data science and web development
           </p>
         </div>
@@ -102,7 +101,7 @@ const Experience = () => {
                                 exp.company
                               )}
                             </h3>
-                            <p className="text-lg text-white dark:text-white text-gray-900 font-medium mt-1">
+                            <p className="text-lg text-white font-medium mt-1">
                               {exp.position}
                             </p>
                           </div>
@@ -189,7 +188,7 @@ const Experience = () => {
                                 <span className="text-sm">{exp.company}</span>
                               )}
                             </h3>
-                            <p className="text-base text-white dark:text-white text-gray-900 font-medium">
+                            <p className="text-base text-white font-medium">
                               {exp.position}
                             </p>
                           </div>
