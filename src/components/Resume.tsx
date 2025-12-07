@@ -82,7 +82,7 @@ const Resume = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-20">
               <a
-                href="/Kunal Resume till 8th December.pdf"
+                href="/Kunal Resume till 8th december.pdf"
                 download="Kunal_Chandra_Resume.pdf"
                 className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 border border-blue-400/30 group-hover:from-blue-400 group-hover:to-indigo-500"
                 data-aos="fade-up"
@@ -94,7 +94,7 @@ const Resume = () => {
               </a>
               
               <a
-                href="/Kunal Resume till 8th December.pdf"
+                href="/Kunal Resume till 8th december.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 border-2 border-blue-400/50 text-blue-400 px-8 py-3 rounded-full font-semibold hover:bg-blue-400/10 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group-hover:text-blue-300 group-hover:border-blue-300/50"
