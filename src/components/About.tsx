@@ -57,9 +57,9 @@ const About = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 dark:from-cyan-500/20 dark:to-purple-600/20 from-blue-500/20 to-indigo-600/20 rounded-2xl blur-xl"></div>
             <img
-              src="/Picture mine.jpg"
+              src="/Mypicstanding.jpeg"
               alt="About Kunal"
-              className="rounded-2xl shadow-2xl shadow-cyan-500/10 dark:shadow-cyan-500/10 shadow-blue-500/10 border border-gray-700/50 dark:border-gray-700/50 border-gray-200/50 relative z-10"
+              className="rounded-2xl shadow-2xl shadow-cyan-500/10 dark:shadow-cyan-500/10 shadow-blue-500/10 border border-gray-700/50 dark:border-gray-700/50 border-gray-200/50 relative z-10 w-full h-auto object-cover object-center max-h-[600px]"
             />
           </div>
           
