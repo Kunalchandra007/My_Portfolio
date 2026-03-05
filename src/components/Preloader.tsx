@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Galaxy from './Galaxy';
-import LightPillar from './LightPillar';
 
 type Props = {
   onFinish?: () => void;
@@ -41,8 +40,10 @@ const Preloader: React.FC<Props> = ({ onFinish }) => {
     const dpr = Math.min(window.devicePixelRatio || 1, lowPerfMode ? 1 : 1.5);
     const sparks: Spark[] = [];
     let meteorActive = false;
-    let meteorX = -180;
-    let meteorY = -100;
+    const meteorStartX = -220;
+    const meteorStartY = -140;
+    let meteorX = meteorStartX;
+    let meteorY = meteorStartY;
     let impactTriggered = false;
     let nameRevealTriggered = false;
     let fadeTriggered = false;
@@ -132,8 +133,6 @@ const Preloader: React.FC<Props> = ({ onFinish }) => {
     const start = performance.now();
     const meteorTravelMs = METEOR_IMPACT_MS - METEOR_START_MS;
     updateImpactTarget();
-    const meteorVX = (targetX - meteorX) / (meteorTravelMs / 16.67);
-    const meteorVY = (targetY - meteorY) / (meteorTravelMs / 16.67);
 
     const targetFps = lowPerfMode ? 30 : 45;
     const frameInterval = 1000 / targetFps;
@@ -156,9 +155,10 @@ const Preloader: React.FC<Props> = ({ onFinish }) => {
           maybePlayWhoosh();
         }
 
-        meteorX += meteorVX;
-        meteorY += meteorVY;
-        const angle = Math.atan2(meteorVY, meteorVX);
+        const progress = Math.min(Math.max((t - METEOR_START_MS) / meteorTravelMs, 0), 1);
+        meteorX = meteorStartX + (targetX - meteorStartX) * progress;
+        meteorY = meteorStartY + (targetY - meteorStartY) * progress;
+        const angle = Math.atan2(targetY - meteorStartY, targetX - meteorStartX);
         const tail = ctx.createLinearGradient(
           meteorX,
           meteorY,
@@ -261,27 +261,17 @@ const Preloader: React.FC<Props> = ({ onFinish }) => {
         hueShift={220}
       />
       <div className="absolute inset-0 bg-black/45" />
-      <LightPillar
-        className="absolute inset-0 opacity-50"
-        topColor="#7a8cff"
-        bottomColor="#1c1340"
-        intensity={lowPerfMode ? 0.35 : 0.45}
-        rotationSpeed={0.12}
-        interactive={false}
-        glowAmount={0.0038}
-        pillarWidth={1.9}
-        pillarHeight={0.42}
-        noiseIntensity={0.3}
-        mixBlendMode="screen"
-        pillarRotation={0}
-        quality={lowPerfMode ? 'low' : 'medium'}
-      />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
       <div className="relative z-10 flex flex-col items-center gap-4 px-6 text-center">
         <div ref={planetRef} className={`preloader-planet ${planetHit ? 'preloader-planet-hit' : ''}`} aria-hidden>
           <span className="preloader-planet-emoji">🌍</span>
         </div>
-        {showName && <p className="preloader-name">H O L A &nbsp; A M I G O</p>}
+        {showName && (
+          <p className="preloader-name">
+            <span className="block">H O L A</span>
+            <span className="block">A M I G O !</span>
+          </p>
+        )}
       </div>
     </div>
   );
