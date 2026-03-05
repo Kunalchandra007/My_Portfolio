@@ -1,235 +1,225 @@
-import React, { useState } from 'react';
-import { Award, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Award } from 'lucide-react';
+import PixelSnow from './PixelSnow';
+
+type Certificate = {
+  name: string;
+  organization: string;
+  date: string;
+  description: string;
+  image: string;
+  learning: string;
+};
+
+const certificates: Certificate[] = [
+  {
+    name: 'Python for Data Science',
+    organization: 'NPTEL - IIT Madras',
+    date: '2024',
+    description: 'Completed NPTEL Python for Data Science with Elite + Silver.',
+    image: '/Python for Data Science (1)_page-0001 (1).jpg',
+    learning: 'Strong foundation in data analysis and manipulation with Python.'
+  },
+  {
+    name: 'Programming in Java',
+    organization: 'NPTEL',
+    date: '2023',
+    description: 'Covered OOP, core Java fundamentals, and problem-solving.',
+    image: '/programming in java.jpeg',
+    learning: 'Improved coding and logic building in Java.'
+  },
+  {
+    name: 'Summer Analytics 2025',
+    organization: 'IIT Guwahati',
+    date: '2025',
+    description: '6-week intensive program on data science and machine learning.',
+    image: '/summer.jpg',
+    learning: 'Hands-on ML exposure with practical analytics tasks.'
+  },
+  {
+    name: 'DSA in Java',
+    organization: 'Apna College',
+    date: '2023',
+    description: 'Data structures and algorithms practice in Java.',
+    image: '/DSA in java.jpeg',
+    learning: 'Better algorithmic thinking and coding speed.'
+  },
+  {
+    name: 'Project Management',
+    organization: 'Coursera',
+    date: '2023',
+    description: 'Project planning and execution fundamentals.',
+    image: '/project management.jpeg',
+    learning: 'Learned delivery workflows and team coordination.'
+  },
+  {
+    name: 'Power BI Training',
+    organization: 'Ducat India',
+    date: '2024',
+    description: 'Power BI dashboards and visualization workflows.',
+    image: '/ducat india.jpeg',
+    learning: 'Improved BI dashboarding and reporting skills.'
+  },
+  {
+    name: 'GirlScript Summer of Code 2025',
+    organization: 'GirlScript Foundation',
+    date: '2025',
+    description: 'Open-source contributions in a national coding initiative.',
+    image: '/gssoc.jpg',
+    learning: 'Real-world collaboration with version control and PR workflows.'
+  },
+  {
+    name: 'Web Development',
+    organization: 'Apna College',
+    date: '2023',
+    description: 'Frontend development with HTML, CSS, and JavaScript.',
+    image: '/Webdev.jpeg',
+    learning: 'Built responsive UI projects and frontend fundamentals.'
+  },
+  {
+    name: 'AI & ML Internship',
+    organization: 'Teachnook',
+    date: '2023',
+    description: 'Worked on preprocessing, model building, and evaluation tasks.',
+    image: '/teachnook.jpeg',
+    learning: 'Applied ML concepts on practical problems.'
+  },
+  {
+    name: 'Tata Data Analytics Workshop',
+    organization: 'Tata Consultancy Services',
+    date: '2024',
+    description: 'Hands-on workshop on analytics and business insights.',
+    image: '/Tata.jpeg',
+    learning: 'Exposure to analytics workflows used in industry.'
+  },
+  {
+    name: 'Intra College Cricket Winner',
+    organization: 'Haridwar University',
+    date: '2024',
+    description: 'Won the intra college cricket tournament with team effort.',
+    image: '/cricket.jpeg',
+    learning: 'Teamwork, consistency, and performance under pressure.'
+  },
+  {
+    name: 'HackWithIndia Finalist',
+    organization: 'HackWithIndia 2024',
+    date: '2024',
+    description: 'Ranked among top teams in a national coding challenge.',
+    image: '/hackwithindia.jpeg',
+    learning: 'Competitive coding and collaborative problem-solving.'
+  }
+];
+
+const splitRows = <T,>(items: T[]) => {
+  const rowOne: T[] = [];
+  const rowTwo: T[] = [];
+  items.forEach((item, i) => (i % 2 === 0 ? rowOne.push(item) : rowTwo.push(item)));
+  return [rowOne, rowTwo];
+};
 
 const Certificates = () => {
-  const [expandedCertificates, setExpandedCertificates] = useState<Set<number>>(new Set());
-  
-  // Enhanced tilt and glow effect handler
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget as HTMLDivElement;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    // Enhanced tilt effect
-    const rotateX = (y - centerY) / 8;
-    const rotateY = (centerX - x) / 8;
-    
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.08, 1.08, 1.08)`;
-    
-    // Glow effect
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
-  
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget as HTMLDivElement;
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  const [rowOne, rowTwo] = splitRows(certificates);
+  const [pausedRows, setPausedRows] = useState<Record<string, boolean>>({});
+  const hoverTimers = useRef<Record<string, number | null>>({});
+
+  useEffect(() => {
+    return () => {
+      Object.values(hoverTimers.current).forEach(timer => {
+        if (timer) clearTimeout(timer);
+      });
+    };
+  }, []);
+
+  const startHoverTimer = (rowId: string) => {
+    if (hoverTimers.current[rowId]) {
+      clearTimeout(hoverTimers.current[rowId]!);
+    }
+    hoverTimers.current[rowId] = window.setTimeout(() => {
+      setPausedRows(prev => ({ ...prev, [rowId]: true }));
+    }, 3000);
   };
 
-  const toggleExpanded = (index: number) => {
-    const newExpanded = new Set(expandedCertificates);
-    if (newExpanded.has(index)) {
-      newExpanded.delete(index);
-    } else {
-      newExpanded.add(index);
+  const clearHoverTimer = (rowId: string) => {
+    if (hoverTimers.current[rowId]) {
+      clearTimeout(hoverTimers.current[rowId]!);
+      hoverTimers.current[rowId] = null;
     }
-    setExpandedCertificates(newExpanded);
+    setPausedRows(prev => ({ ...prev, [rowId]: false }));
   };
 
-  const truncateDescription = (description: string, maxLength: number = 200) => {
-    if (description.length <= maxLength) return description;
-    return description.substring(0, maxLength) + '...';
-  };
-  const certificates = [
-    {
-      name: "Python for Data Science",
-      organization: "NPTEL - IIT Madras",
-      date: "2024",
-      description: "Successfully completed the NPTEL Online Certification course on Python for Data Science from Indian Institute of Technology, Madras, earning an Elite tag and Silver medal with a consolidated score of 79%. This 4-week course significantly enhanced my skills in using Python for data analysis and manipulation.",
-      image: "/Python for Data Science (1)_page-0001 (1).jpg",
-      learning: "Enhanced Python skills for data analysis, manipulation, and scientific computing with practical applications."
-    },
-    {
-      name: "Programming in Java",
-      organization: "NPTEL",
-      date: "2023",
-      description: "Completed a comprehensive course on Java programming, covering OOP concepts, data structures, and algorithms.",
-      image: "/programming in java.jpeg",
-      learning: "Strengthened Java fundamentals and problem-solving skills."
-    },
-    {
-      name: "Summer Analytics 2025",
-      organization: "IIT Guwahati",
-      date: "2025",
-      description: "Participated in and successfully completed the 6-week 'Summer Analytics 2025' program organized by the Consulting & Analytics Club, IIT Guwahati. The program provided hands-on experience and a deep dive into the fields of Data Science and Machine Learning.",
-      image: "/summer.jpg",
-      learning: "Gained comprehensive knowledge in Data Science and Machine Learning through hands-on projects and industry exposure."
-    },
-    {
-      name: "DSA in Java",
-      organization: "Apna College",
-      date: "2023",
-      description: "Mastered data structures and algorithms in Java, including arrays, linked lists, trees, and sorting algorithms.",
-      image: "/DSA in java.jpeg",
-      learning: "Improved algorithmic thinking and coding efficiency."
-    },
-    {
-      name: "Project Management",
-      organization: "Coursera",
-      date: "2023",
-      description: "Learned project planning, execution, and agile methodologies for effective project delivery.",
-      image: "/project management.jpeg",
-      learning: "Gained skills in managing software projects and teamwork."
-    },
-    {
-      name: "Power BI Training",
-      organization: "Ducat India",
-      date: "2024",
-      description: "Completed a Power BI training course with practical exercises and real-world data visualization projects.",
-      image: "/ducat india.jpeg",
-      learning: "Enhanced data visualization and dashboarding skills using Power BI."
-    },
-    {
-      name: "GirlScript Summer of Code 2025",
-      organization: "GirlScript Foundation",
-      date: "2025",
-      description: "Contributed to GirlScript Summer of Code 2025, a prominent open-source program. This experience involved collaborating with a team to contribute to an open-source project, enhancing my practical coding skills and understanding of version control systems.",
-      image: "/gssoc.jpg",
-      learning: "Gained hands-on experience in open-source development, version control, and collaborative coding practices."
-    },
-    {
-      name: "Web Development",
-      organization: "Apna College",
-      date: "2023",
-      description: "Hands-on training in HTML, CSS, JavaScript, and modern web frameworks for building responsive websites.",
-      image: "/Webdev.jpeg",
-      learning: "Built several web projects and learned best practices in frontend development."
-    },
-    {
-      name: "AI & ML Internship",
-      organization: "Teachnook",
-      date: "2023",
-      description: "Interned in AI & ML, working on real projects involving data preprocessing, model building, and evaluation.",
-      image: "/teachnook.jpeg",
-      learning: "Applied machine learning concepts to solve real-world problems."
-    },
-    {
-      name: "Tata Data Analytics Workshop",
-      organization: "Tata Consultancy Services",
-      date: "2024",
-      description: "Participated in a hands-on workshop focused on data analytics, business intelligence, and real-world case studies.",
-      image: "/Tata.jpeg",
-      learning: "Gained practical experience in data analytics tools and industry best practices."
-    },
-    {
-      name: "Won Intra College Cricket Tournament",
-      organization: "Haridwar University",
-      date: "2024",
-      description: "Achieved first place in the Intra College cricket tournament with my whole team. This victory was a testament to our hard work, dedication, and the power of teamwork.",
-      image: "/cricket.jpeg",
-      learning: "Learned the importance of collaboration, perseverance, and supporting each other to achieve a common goal."
-    },
-    {
-      name: "HackWithIndia: National Coding Challenge Finalist",
-      organization: "HackWithIndia 2024",
-      date: "2024",
-      description: "Secured a spot in the top 5000 among 25,000+ teams from all over India in the prestigious HackWithIndia coding competition.",
-      image: "/hackwithindia.jpeg",
-      learning: "Demonstrated problem-solving, teamwork, and coding skills at a national level."
+  const pauseOnInteract = (rowId: string) => {
+    if (hoverTimers.current[rowId]) {
+      clearTimeout(hoverTimers.current[rowId]!);
+      hoverTimers.current[rowId] = null;
     }
-  ];
+    setPausedRows(prev => ({ ...prev, [rowId]: true }));
+  };
+
+  const renderRow = (items: Certificate[], rowId: string, reverse = false) => (
+    <div
+      className={`marquee-line ${reverse ? 'marquee-reverse' : ''} ${pausedRows[rowId] ? 'is-paused' : ''}`}
+      onMouseEnter={() => startHoverTimer(rowId)}
+      onMouseLeave={() => clearHoverTimer(rowId)}
+      onPointerDown={() => pauseOnInteract(rowId)}
+      onTouchStart={() => pauseOnInteract(rowId)}
+    >
+      <div className="marquee-track">
+        {[...items, ...items].map((cert, index) => (
+          <a
+            key={`${cert.name}-${index}`}
+            href={cert.image}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="marquee-card certificate-card"
+          >
+            <div className="relative overflow-hidden rounded-t-xl bg-gray-800">
+              <img src={cert.image} alt={cert.name} className="h-44 w-full object-contain transition-transform duration-300 hover:scale-105" />
+              <div className="absolute right-3 top-3 rounded-full border border-yellow-400/30 bg-yellow-500/20 p-2">
+                <Award className="h-5 w-5 text-yellow-300" />
+              </div>
+            </div>
+            <div className="p-5">
+              <h3 className="mb-1 text-lg font-semibold text-white">{cert.name}</h3>
+              <p className="text-sm font-medium text-gray-300">{cert.organization}</p>
+              <p className="mb-2 text-xs font-mono text-gray-500">{cert.date}</p>
+              <p className="mb-3 text-sm text-gray-400">{cert.description}</p>
+              <p className="text-sm italic text-gray-300">{cert.learning}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
-    <section id="certificates" className="py-20 bg-black relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div 
-          className="text-center mb-16"
-          data-aos="fade-up"
-          data-aos-duration="800"
-        >
-          <h2 className="text-4xl font-bold text-white mb-4">
+    <section id="certificates" className="relative overflow-hidden bg-black py-20">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <PixelSnow
+          className="h-full w-full opacity-35"
+          color="#c7d2fe"
+          variant="round"
+          density={0.2}
+          brightness={0.85}
+          speed={1.05}
+          pixelResolution={220}
+          direction={132}
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/5 to-black/30 pointer-events-none z-[1]" />
+      <div className="relative z-10 mx-auto mb-12 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="mb-4 text-4xl font-bold text-white">
             Certificates & <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Achievements</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Professional certifications and courses that demonstrate my commitment to continuous learning and skill development.
+          <p className="mx-auto max-w-3xl text-xl text-gray-300">
+            Certifications and achievements that show continuous learning and practical growth.
           </p>
         </div>
+      </div>
 
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((cert, index) => (
-              <div 
-                key={index}
-                className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden hover:border-yellow-400/50 hover:bg-gray-900/70 transition-all duration-300 group cursor-pointer relative"
-                data-aos="fade-up"
-                data-aos-duration="600"
-                data-aos-delay={`${200 + index * 100}`}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                style={{ 
-                  transformStyle: 'preserve-3d',
-                  '--mouse-x': '50%',
-                  '--mouse-y': '50%'
-                } as React.CSSProperties}
-              >
-                {/* Enhanced glow effect overlay */}
-                <div
-                  className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-20 opacity-0 group-hover:opacity-100 rounded-xl"
-                  style={{
-                    background: 'radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(255,215,0,0.15), rgba(255,255,255,0.05) 40%, transparent 70%)'
-                  }}
-                />
-                <div className="relative overflow-hidden">
-                  <img
-                    src={cert.image}
-                    alt={cert.name}
-                    className="w-full h-48 object-contain bg-gray-800 group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-                    onClick={() => window.open(cert.image, '_blank')}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-yellow-500/20 backdrop-blur-sm p-2 rounded-full border border-yellow-500/30">
-                      <Award className="w-6 h-6 text-yellow-400" />
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-gray-200 transition-colors duration-300">{cert.name}</h3>
-                  <p className="text-gray-300 font-medium mb-2">{cert.organization}</p>
-                  <p className="text-gray-500 text-sm mb-3 font-mono">{cert.date}</p>
-                  <p className="text-gray-400 mb-4">
-                    {expandedCertificates.has(index) ? cert.description : truncateDescription(cert.description)}
-                  </p>
-                  {cert.description.length > 200 && (
-                    <button
-                      onClick={() => toggleExpanded(index)}
-                      className="flex items-center space-x-1 text-white hover:text-gray-300 transition-colors duration-300 mb-4"
-                    >
-                      <span className="text-sm font-medium">
-                        {expandedCertificates.has(index) ? 'Read Less' : 'Read More'}
-                      </span>
-                      {expandedCertificates.has(index) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                    </button>
-                  )}
-                  <p className="text-gray-300 italic mb-2">{cert.learning}</p>
-                  <button
-                    className="mt-2 px-4 py-1 bg-white text-black rounded hover:bg-gray-200 transition"
-                    onClick={() => window.open(cert.image, '_blank')}
-                    data-aos="zoom-in"
-                    data-aos-duration="400"
-                    data-aos-delay={`${400 + index * 100}`}
-                  >
-                    View Full Image
-                  </button>
-                </div>
-              </div>
-          ))}
-        </div>
+      <div className="space-y-6 relative z-10">
+        {renderRow(rowOne, 'cert-row-1', false)}
+        {renderRow(rowTwo, 'cert-row-2', true)}
       </div>
     </section>
   );

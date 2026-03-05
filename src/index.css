@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -64,5 +68,178 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Preloader styles */
+.preloader-shake {
+  animation: preloader-shake 0.28s ease-in-out 0s 1;
+}
+
+@keyframes preloader-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-7px) translateY(-2px) rotate(-0.6deg); }
+  40% { transform: translateX(8px) translateY(2px) rotate(0.7deg); }
+  60% { transform: translateX(-5px) translateY(1px) rotate(-0.35deg); }
+  80% { transform: translateX(4px) translateY(-1px) rotate(0.25deg); }
+  100% { transform: translateX(0); }
+}
+
+.preloader-root {
+  opacity: 1;
+}
+
+.preloader-fade-out {
+  animation: preloader-fade-out 0.55s ease forwards;
+}
+
+@keyframes preloader-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.preloader-glitch-line {
+  letter-spacing: 0.42em;
+  font-family: 'Orbitron', 'Rajdhani', ui-sans-serif, system-ui;
+  font-size: clamp(1.85rem, 7vw, 4.2rem);
+  font-weight: 800;
+  color: #e9f4ff;
+  text-shadow:
+    -2px 0 rgba(255, 70, 100, 0.5),
+    2px 0 rgba(75, 185, 255, 0.5),
+    0 0 24px rgba(170, 225, 255, 0.32);
+  animation: preloader-glitch-flicker 0.18s steps(2) infinite;
+}
+
+@keyframes preloader-glitch-flicker {
+  0% { transform: translate(0, 0); opacity: 1; }
+  20% { transform: translate(2px, -1px); opacity: 0.8; }
+  40% { transform: translate(-2px, 1px); opacity: 1; }
+  60% { transform: translate(1px, 0); opacity: 0.85; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+.preloader-final-name {
+  animation: preloader-settle 0.45s ease forwards;
+  letter-spacing: 0.5em;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(125, 200, 255, 0.08);
+}
+
+@keyframes preloader-settle {
+  0% { filter: blur(2px); transform: scale(1.03); }
+  100% { filter: blur(0); transform: scale(1); }
+}
+
+.preloader-planet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(98px, 12vw, 158px);
+  height: clamp(98px, 12vw, 158px);
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, rgba(110, 180, 255, 0.28), rgba(35, 70, 130, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
+  box-shadow: 0 0 32px rgba(105, 170, 255, 0.22);
+  transition: transform 0.3s ease, opacity 0.4s ease, filter 0.35s ease;
+}
+
+.preloader-planet-emoji {
+  font-size: clamp(2.8rem, 6vw, 4.1rem);
+  line-height: 1;
+  filter: drop-shadow(0 0 10px rgba(120, 190, 255, 0.38));
+}
+
+.preloader-planet-hit {
+  transform: scale(1.24);
+  filter: blur(1.2px) brightness(1.4);
+  opacity: 0;
+}
+
+.preloader-name {
+  letter-spacing: 0.5em;
+  font-family: 'Orbitron', 'Rajdhani', ui-sans-serif, system-ui;
+  font-size: clamp(1.85rem, 7vw, 4.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(125, 200, 255, 0.2);
+  animation: preloader-settle 0.45s ease forwards;
+}
+
+/* Projects & Certificates marquee rows */
+.marquee-line {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
+  animation: marquee-left 44s linear infinite;
+  padding: 0.35rem 0;
+}
+
+.marquee-reverse .marquee-track {
+  animation-name: marquee-right;
+}
+
+.marquee-line.is-paused .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-card {
+  width: 22rem;
+  flex: 0 0 auto;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(91, 98, 111, 0.6);
+  background: rgba(15, 19, 27, 0.86);
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.marquee-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(234, 239, 248, 0.36);
+  background: rgba(22, 27, 37, 0.92);
+}
+
+.project-card:hover {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+.certificate-card:hover {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 0.625rem)); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(calc(-50% - 0.625rem)); }
+  100% { transform: translateX(0); }
+}
+
+/* Reduce heavy per-element AOS delays so content appears quickly while scrolling */
+[data-aos][data-aos-delay] {
+  transition-delay: 50ms !important;
+}
+
+.route-page {
+  animation: route-fade-in 260ms ease-out;
+}
+
+@keyframes route-fade-in {
+  from {
+    opacity: 0.82;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

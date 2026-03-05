@@ -1,10 +1,28 @@
 
 import { Building2, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import PixelSnow from './PixelSnow';
 
 const Experience = () => {
   const experiences = [
     {
       id: 1,
+      company: "Defence Research and Development Organisation (DRDO), Delhi",
+      position: "Solid State Physics Laboratory (SSPL) — Machine Learning Intern",
+      duration: "1 Jan 2026 – 31 Jan 2026",
+      location: "Delhi, India",
+      logo: "/drdo.webp",
+      website: "https://www.drdo.gov.in",
+      report: "https://drive.google.com/file/d/1Rb5Rfer_xWUH3F0S-VHbB8oY3MLnimFY/view",
+      achievements: [
+        "Developed a Siamese deep learning based change detection system (SNUNet) for multi-temporal satellite imagery.",
+        "Focused on automated detection quantification and semantic analysis of land-surface changes.",
+        "Enabled defence-grade intelligence workflows for border surveillance, infrastructure monitoring, and disaster damage assessment.",
+        "Achieved 96.37% Precision, 95.95% Recall, and 96.16% F1 Score on the CDD dataset."
+      ],
+      type: "internship"
+    },
+    {
+      id: 2,
       company: "Intelligence Fusion & Strategic Operations (IFSO) Special Cell, Delhi Police",
       position: "Data Science Intern",
       duration: "1st August 2025 - 31st August 2025",
@@ -16,27 +34,24 @@ const Experience = () => {
         "Collaborated closely with the IFSO Special Cell team onsite to implement actionable insights from complex datasets."
       ],
       type: "internship"
-    },
-    {
-      id: 2,
-      company: "Bizplus4u",
-      position: "Frontend Web Developer",
-      duration: "2nd December 2024 - 28th February 2025",
-      location: "Remote",
-      logo: null,
-      website: "https://bizplus4u.com/",
-      achievements: [
-        "Frontend Development Skills – Gained hands-on experience in HTML, CSS, JavaScript, and responsive design while building an e-commerce platform.",
-        "UI/UX Enhancement – Worked on improving user interface and experience to ensure a smooth shopping journey for customers.",
-        "API Integration – Integrated backend APIs for seamless product display, user authentication, and cart functionality.",
-        "Performance Optimization – Optimized website speed and responsiveness for better user engagement and SEO ranking."
-      ],
-      type: "internship"
     }
   ];
 
   return (
     <section id="experience" className="py-20 bg-black relative overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none z-0">
+      <PixelSnow
+        className="h-full w-full opacity-55"
+        color="#dbeafe"
+        variant="round"
+        density={0.28}
+        brightness={1.15}
+        speed={0.95}
+        pixelResolution={210}
+        direction={118}
+      />
+    </div>
+    <div className="absolute inset-0 bg-gradient-to-b from-black/22 via-black/5 to-black/22 pointer-events-none z-[1]" />
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 
           className="text-center mb-16"
@@ -70,7 +85,7 @@ const Experience = () => {
                   <div className="absolute left-1/2 w-4 h-4 bg-gradient-to-r from-cyan-400 to-blue-500 dark:from-cyan-400 dark:to-blue-500 from-blue-500 to-indigo-500 rounded-full border-4 border-gray-900 dark:border-gray-900 border-gray-50 z-10 transform -translate-x-1/2"></div>
                   
                   {/* Content card */}
-                  <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                  <div className={`w-[46%] ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                     <div 
                       className="bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-700/50 dark:border-gray-700/50 border-gray-200/50 p-8 hover:shadow-lg hover:shadow-cyan-500/10 dark:hover:shadow-cyan-500/10 hover:shadow-blue-500/10 transition-all duration-300 group"
                       data-aos="zoom-in"
@@ -142,6 +157,20 @@ const Experience = () => {
                           </li>
                         ))}
                       </ul>
+
+                      {exp.report && (
+                        <div className="mt-5">
+                          <a
+                            href={exp.report}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            <span>View Internship Report</span>
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -229,6 +258,20 @@ const Experience = () => {
                           </li>
                         ))}
                       </ul>
+
+                      {exp.report && (
+                        <div className="mt-4">
+                          <a
+                            href={exp.report}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-xs text-gray-300 hover:text-white transition-colors"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            <span>View Internship Report</span>
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

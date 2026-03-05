@@ -1,32 +1,28 @@
 import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
-// @ts-ignore
-import Particles from './Particles';
-// @ts-ignore
-import SplitText from './SplitText';
+import LightPillar from './LightPillar';
+import { navigateTo } from '../lib/navigation';
 
 const Hero = () => {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative bg-black overflow-hidden">
-      {/* Particles Background */}
-      <div className="absolute inset-0 w-full h-full">
-        <Particles
-          particleColors={['#ffffff', '#e5e7eb', '#d1d5db']}
-          particleCount={200}
-          particleSpread={10}
-          speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover={true}
-          alphaParticles={false}
-          disableRotation={false}
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(137,82,255,0.34)_0%,rgba(63,23,122,0.22)_36%,rgba(0,0,0,0.95)_80%)]" />
+        <LightPillar
+          className="absolute inset-0 opacity-95"
+          topColor="#c77dff"
+          bottomColor="#5a2bbb"
+          intensity={1}
+          rotationSpeed={0.3}
+          interactive={false}
+          glowAmount={0.005}
+          pillarWidth={3}
+          pillarHeight={0.4}
+          noiseIntensity={0.45}
+          mixBlendMode="screen"
+          pillarRotation={16}
+          quality="high"
         />
       </div>
 
@@ -43,7 +39,7 @@ const Hero = () => {
           >
             <div className="relative inline-block">
               <img
-                src="/Picture mine.jpg"
+                src="/pfp.jpg"
                 alt="Kunal Chandra"
                 className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white/20 shadow-2xl shadow-white/10"
               />
@@ -52,18 +48,9 @@ const Hero = () => {
           </motion.div>
           
           <div className="mb-6">
-            <SplitText
-              text="Hi, I'm Kunal Chandra"
-              tag="h1"
-              className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg"
-              delay={100}
-              duration={0.8}
-              ease="power3.out"
-              splitType="chars"
-              from={{ opacity: 0, y: 50, rotationX: -90 }}
-              to={{ opacity: 1, y: 0, rotationX: 0 }}
-              threshold={0.1}
-            />
+            <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg leading-[1.15]">
+              Hi, I&apos;m Kunal Chandra
+            </h1>
           </div>
           
           <div
@@ -102,7 +89,7 @@ const Hero = () => {
             data-aos-delay="600"
           >
             <motion.button
-              onClick={() => scrollToSection('#contact')}
+              onClick={() => navigateTo('/contact')}
               className="bg-white text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 hover:bg-gray-100 relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -111,7 +98,7 @@ const Hero = () => {
             </motion.button>
             
             <motion.button
-              onClick={() => scrollToSection('#projects')}
+              onClick={() => navigateTo('/projects')}
               className="border-2 border-white/50 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-white/10 hover:border-white hover:shadow-lg hover:shadow-white/25 hover:scale-105 relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -130,35 +117,35 @@ const Hero = () => {
               href="https://www.linkedin.com/in/kunal-chandra007"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-900/50 backdrop-blur-sm rounded-full border border-gray-700/50 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 group relative overflow-hidden"
+              className="p-3 bg-black/75 backdrop-blur-sm rounded-full border border-gray-800/90 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 group relative overflow-hidden"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Linkedin className="w-6 h-6 text-gray-400 group-hover:text-blue-400 relative z-10" />
+              <Linkedin className="w-6 h-6 text-gray-500 group-hover:text-blue-400 relative z-10" />
             </motion.a>
             <motion.a
               href="https://github.com/Kunalchandra007"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-900/50 backdrop-blur-sm rounded-full border border-gray-700/50 hover:border-white/50 hover:bg-white/10 transition-all duration-300 group relative overflow-hidden"
+              className="p-3 bg-black/75 backdrop-blur-sm rounded-full border border-gray-800/90 hover:border-white/50 hover:bg-white/10 transition-all duration-300 group relative overflow-hidden"
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Github className="w-6 h-6 text-gray-400 group-hover:text-white relative z-10" />
+              <Github className="w-6 h-6 text-gray-500 group-hover:text-white relative z-10" />
             </motion.a>
             <motion.a
-              onClick={() => scrollToSection('#contact')}
-              className="p-3 bg-gray-900/50 backdrop-blur-sm rounded-full border border-gray-700/50 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 group cursor-pointer relative overflow-hidden"
+              onClick={() => navigateTo('/contact')}
+              className="p-3 bg-black/75 backdrop-blur-sm rounded-full border border-gray-800/90 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 group cursor-pointer relative overflow-hidden"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Mail className="w-6 h-6 text-gray-400 group-hover:text-green-400 relative z-10" />
+              <Mail className="w-6 h-6 text-gray-500 group-hover:text-green-400 relative z-10" />
             </motion.a>
             <motion.a
               href="https://leetcode.com/u/Kunal_chandra007/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-900/50 backdrop-blur-sm rounded-full border border-gray-700/50 hover:border-yellow-400/50 hover:bg-yellow-400/10 transition-all duration-300 group relative overflow-hidden"
+              className="p-3 bg-black/75 backdrop-blur-sm rounded-full border border-gray-800/90 hover:border-yellow-400/50 hover:bg-yellow-400/10 transition-all duration-300 group relative overflow-hidden"
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -172,7 +159,7 @@ const Hero = () => {
       </div>
       
       <button
-        onClick={() => scrollToSection('#about')}
+        onClick={() => navigateTo('/about')}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white hover:text-gray-300 transition-colors"
         data-aos="fade-up"
         data-aos-duration="1000"

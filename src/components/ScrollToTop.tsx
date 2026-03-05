@@ -5,16 +5,21 @@ const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let rafId = 0;
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        setIsVisible(window.pageYOffset > 300);
+        rafId = 0;
+      });
     };
 
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    toggleVisibility();
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const scrollToTop = () => {

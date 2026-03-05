@@ -1,6 +1,7 @@
 import React from 'react';
 import { GraduationCap, Code, Brain, Target } from 'lucide-react';
-import { motion } from 'framer-motion';
+// @ts-expect-error - imported from local JS component
+import Particles from './Particles';
 
 const About = () => {
   const highlights = [
@@ -33,7 +34,20 @@ const About = () => {
 
   return (
     <section id="about" className="py-20 bg-black relative overflow-hidden">
-      
+      <div className="absolute inset-0 w-full h-full">
+        <Particles
+          particleColors={['#ffffff', '#e5e7eb', '#d1d5db']}
+          particleCount={120}
+          particleSpread={10}
+          speed={0.06}
+          particleBaseSize={88}
+          moveParticlesOnHover={false}
+          alphaParticles={false}
+          disableRotation={false}
+        />
+      </div>
+
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/20 via-transparent to-gray-900/20" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 
           className="text-center mb-16"
