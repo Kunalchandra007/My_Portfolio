@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Award } from 'lucide-react';
 import PixelSnow from './PixelSnow';
 
@@ -119,58 +119,16 @@ const splitRows = <T,>(items: T[]) => {
 
 const Certificates = () => {
   const [rowOne, rowTwo] = splitRows(certificates);
-  const [pausedRows, setPausedRows] = useState<Record<string, boolean>>({});
-  const hoverTimers = useRef<Record<string, number | null>>({});
-
-  useEffect(() => {
-    return () => {
-      Object.values(hoverTimers.current).forEach(timer => {
-        if (timer) clearTimeout(timer);
-      });
-    };
-  }, []);
-
-  const startHoverTimer = (rowId: string) => {
-    if (hoverTimers.current[rowId]) {
-      clearTimeout(hoverTimers.current[rowId]!);
-    }
-    hoverTimers.current[rowId] = window.setTimeout(() => {
-      setPausedRows(prev => ({ ...prev, [rowId]: true }));
-    }, 3000);
-  };
-
-  const clearHoverTimer = (rowId: string) => {
-    if (hoverTimers.current[rowId]) {
-      clearTimeout(hoverTimers.current[rowId]!);
-      hoverTimers.current[rowId] = null;
-    }
-    setPausedRows(prev => ({ ...prev, [rowId]: false }));
-  };
-
-  const pauseOnInteract = (rowId: string) => {
-    if (hoverTimers.current[rowId]) {
-      clearTimeout(hoverTimers.current[rowId]!);
-      hoverTimers.current[rowId] = null;
-    }
-    setPausedRows(prev => ({ ...prev, [rowId]: true }));
-  };
-
-  const renderRow = (items: Certificate[], rowId: string, reverse = false) => (
-    <div
-      className={`marquee-line ${reverse ? 'marquee-reverse' : ''} ${pausedRows[rowId] ? 'is-paused' : ''}`}
-      onMouseEnter={() => startHoverTimer(rowId)}
-      onMouseLeave={() => clearHoverTimer(rowId)}
-      onPointerDown={() => pauseOnInteract(rowId)}
-      onTouchStart={() => pauseOnInteract(rowId)}
-    >
-      <div className="marquee-track">
-        {[...items, ...items].map((cert, index) => (
+  const renderRow = (items: Certificate[]) => (
+    <div className="scroll-row" tabIndex={0} aria-label="Scrollable certificates row">
+      <div className="scroll-track">
+        {items.map((cert) => (
           <a
-            key={`${cert.name}-${index}`}
+            key={cert.name}
             href={cert.image}
             target="_blank"
             rel="noopener noreferrer"
-            className="marquee-card certificate-card"
+            className="scroll-card certificate-card"
           >
             <div className="relative overflow-hidden rounded-t-xl bg-gray-800">
               <img src={cert.image} alt={cert.name} className="h-44 w-full object-contain transition-transform duration-300 hover:scale-105" />
@@ -218,8 +176,8 @@ const Certificates = () => {
       </div>
 
       <div className="space-y-6 relative z-10">
-        {renderRow(rowOne, 'cert-row-1', false)}
-        {renderRow(rowTwo, 'cert-row-2', true)}
+        {renderRow(rowOne)}
+        {renderRow(rowTwo)}
       </div>
     </section>
   );

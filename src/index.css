@@ -165,34 +165,46 @@ html {
   animation: preloader-settle 0.45s ease forwards;
 }
 
-/* Projects & Certificates marquee rows */
-.marquee-line {
+/* Projects & Certificates scroll rows */
+.scroll-row {
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
 }
 
-.marquee-track {
+.scroll-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+}
+
+.scroll-track {
   display: flex;
-  width: max-content;
+  width: fit-content;
   gap: 1.25rem;
-  animation: marquee-left 44s linear infinite;
   padding: 0.35rem 0;
+  padding-inline: max(1rem, calc((100vw - 80rem) / 2));
 }
 
-.marquee-reverse .marquee-track {
-  animation-name: marquee-right;
-}
-
-.marquee-line.is-paused .marquee-track {
-  animation-play-state: paused;
-}
-
-.marquee-card {
+.scroll-card {
   width: 22rem;
   flex: 0 0 auto;
+  scroll-snap-align: start;
   border-radius: 0.85rem;
   border: 1px solid rgba(91, 98, 111, 0.6);
   background: rgba(15, 19, 27, 0.86);
@@ -200,7 +212,7 @@ html {
   transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
 }
 
-.marquee-card:hover {
+.scroll-card:hover {
   transform: translateY(-4px);
   border-color: rgba(234, 239, 248, 0.36);
   background: rgba(22, 27, 37, 0.92);
@@ -212,16 +224,6 @@ html {
 
 .certificate-card:hover {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
-}
-
-@keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 0.625rem)); }
-}
-
-@keyframes marquee-right {
-  0% { transform: translateX(calc(-50% - 0.625rem)); }
-  100% { transform: translateX(0); }
 }
 
 /* Reduce heavy per-element AOS delays so content appears quickly while scrolling */
