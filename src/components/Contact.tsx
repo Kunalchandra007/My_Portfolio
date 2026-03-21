@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Phone, MapPin, Send, Linkedin, Github, Twitter } from 'lucide-react';
-import Balatro from './Balatro';
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -52,26 +51,8 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="pt-20 pb-10 bg-black relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <Balatro
-          className="opacity-50"
-          color1="#ff1f64"
-          color2="#9b0036"
-          color3="#050506"
-          contrast={4.2}
-          lighting={0.44}
-          spinSpeed={5.0}
-          pixelFilter={900}
-          isRotate
-          mouseInteraction={false}
-          maxFps={20}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500/12 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl"></div>
-      </div>
-      <div className="absolute inset-0 bg-black/40 pointer-events-none z-[1]" />
+    <section id="contact" className="pt-20 pb-10 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/20 via-transparent to-gray-900/20 pointer-events-none z-[1]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 

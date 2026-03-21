@@ -165,46 +165,9 @@ html {
   animation: preloader-settle 0.45s ease forwards;
 }
 
-/* Projects & Certificates scroll rows */
-.scroll-row {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  width: 100%;
-  scroll-behavior: smooth;
-  scroll-snap-type: x proximity;
-  touch-action: pan-x;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 0.25rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
-}
-
-.scroll-row::-webkit-scrollbar {
-  height: 8px;
-}
-
-.scroll-row::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scroll-row::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.45);
-  border-radius: 999px;
-}
-
-.scroll-track {
-  display: flex;
-  width: fit-content;
-  gap: 1.25rem;
-  padding: 0.35rem 0;
-  padding-inline: max(1rem, calc((100vw - 80rem) / 2));
-}
-
 .scroll-card {
   width: 22rem;
   flex: 0 0 auto;
-  scroll-snap-align: start;
   border-radius: 0.85rem;
   border: 1px solid rgba(91, 98, 111, 0.6);
   background: rgba(15, 19, 27, 0.86);
@@ -224,6 +187,22 @@ html {
 
 .certificate-card:hover {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+}
+
+.marquee-row {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 0.25rem;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
+  padding: 0.35rem 0;
+  padding-inline: max(1rem, calc((100vw - 80rem) / 2));
+  will-change: transform;
 }
 
 /* Reduce heavy per-element AOS delays so content appears quickly while scrolling */

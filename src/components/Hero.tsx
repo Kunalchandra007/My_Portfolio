@@ -89,7 +89,7 @@ const Hero = () => {
             data-aos-delay="600"
           >
             <motion.button
-              onClick={() => navigateTo('/contact')}
+              onClick={() => navigateTo('contact')}
               className="bg-white text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/25 hover:bg-gray-100 relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -98,7 +98,7 @@ const Hero = () => {
             </motion.button>
             
             <motion.button
-              onClick={() => navigateTo('/projects')}
+              onClick={() => navigateTo('projects')}
               className="border-2 border-white/50 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-white/10 hover:border-white hover:shadow-lg hover:shadow-white/25 hover:scale-105 relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -134,7 +134,7 @@ const Hero = () => {
               <Github className="w-6 h-6 text-gray-500 group-hover:text-white relative z-10" />
             </motion.a>
             <motion.a
-              onClick={() => navigateTo('/contact')}
+              onClick={() => navigateTo('contact')}
               className="p-3 bg-black/75 backdrop-blur-sm rounded-full border border-gray-800/90 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 group cursor-pointer relative overflow-hidden"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
@@ -159,7 +159,7 @@ const Hero = () => {
       </div>
       
       <button
-        onClick={() => navigateTo('/about')}
+        onClick={() => navigateTo('about')}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white hover:text-gray-300 transition-colors"
         data-aos="fade-up"
         data-aos-duration="1000"

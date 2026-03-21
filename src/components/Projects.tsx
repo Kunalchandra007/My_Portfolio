@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink, Github } from 'lucide-react';
-import PixelSnow from './PixelSnow';
+import AutoScrollRow from './AutoScrollRow';
 
 type Project = {
   title: string;
@@ -90,70 +90,53 @@ const projects: Project[] = [
   }
 ];
 
-const splitRows = <T,>(items: T[]) => {
-  const rowOne: T[] = [];
-  const rowTwo: T[] = [];
-  items.forEach((item, i) => (i % 2 === 0 ? rowOne.push(item) : rowTwo.push(item)));
-  return [rowOne, rowTwo];
-};
-
 const Projects = () => {
-  const [rowOne, rowTwo] = splitRows(projects);
-  const renderRow = (items: Project[]) => (
-    <div className="scroll-row" tabIndex={0} aria-label="Scrollable projects row">
-      <div className="scroll-track">
-        {items.map((project) => (
-          <a
-            key={project.title}
-            href={project.demo || project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="scroll-card project-card"
-          >
-            <div className="relative overflow-hidden rounded-t-xl">
-              <img src={project.image} alt={project.title} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
-            </div>
-            <div className="p-5">
-              <h3 className="mb-2 text-lg font-semibold text-white">{project.title}</h3>
-              <p className="mb-4 text-sm text-gray-400">{project.description}</p>
-              <div className="mb-4 flex flex-wrap gap-2">
-                {project.tags.slice(0, 4).map((tag) => (
-                  <span key={`${project.title}-${tag}`} className="rounded-full border border-gray-700/80 bg-gray-800/70 px-2 py-1 text-xs text-gray-300">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center gap-4 text-sm text-gray-300">
-                <span className="inline-flex items-center gap-1">
-                  <Github size={16} />
-                  Code
+  const renderRow = (items: Project[], direction: 1 | -1, rowLabel: string) => (
+    <AutoScrollRow
+      items={items}
+      direction={direction}
+      ariaLabel={rowLabel}
+      pauseDelayMs={3000}
+      speedPxPerSecond={34}
+      renderItem={(project, index) => (
+        <a
+          key={`${project.title}-${index}`}
+          href={project.demo || project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="scroll-card project-card"
+        >
+          <div className="relative overflow-hidden rounded-t-xl">
+            <img src={project.image} alt={project.title} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
+          </div>
+          <div className="p-5">
+            <h3 className="mb-2 text-lg font-semibold text-white">{project.title}</h3>
+            <p className="mb-4 text-sm text-gray-400">{project.description}</p>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {project.tags.slice(0, 4).map((tag) => (
+                <span key={`${project.title}-${tag}-${index}`} className="rounded-full border border-gray-700/80 bg-gray-800/70 px-2 py-1 text-xs text-gray-300">
+                  {tag}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <ExternalLink size={16} />
-                  View
-                </span>
-              </div>
+              ))}
             </div>
-          </a>
-        ))}
-      </div>
-    </div>
+            <div className="flex items-center gap-4 text-sm text-gray-300">
+              <span className="inline-flex items-center gap-1">
+                <Github size={16} />
+                Code
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <ExternalLink size={16} />
+                View
+              </span>
+            </div>
+          </div>
+        </a>
+      )}
+    />
   );
 
   return (
     <section id="projects" className="relative overflow-hidden bg-black py-20">
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <PixelSnow
-          className="h-full w-full opacity-35"
-          color="#bfdbfe"
-          variant="round"
-          density={0.2}
-          brightness={0.85}
-          speed={1}
-          pixelResolution={220}
-          direction={125}
-        />
-      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/5 to-black/30 pointer-events-none z-[1]" />
       <div className="relative z-10 mx-auto mb-12 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
@@ -165,8 +148,7 @@ const Projects = () => {
       </div>
 
       <div className="space-y-6 relative z-10">
-        {renderRow(rowOne)}
-        {renderRow(rowTwo)}
+        {renderRow(projects, 1, 'Projects sliding left to right')}
       </div>
     </section>
   );

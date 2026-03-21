@@ -37,14 +37,14 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '/', icon: <Home size={18} /> },
-    { name: 'About', href: '/about', icon: <UserRound size={18} /> },
-    { name: 'Skills', href: '/skills', icon: <Cpu size={18} /> },
-    { name: 'Experience', href: '/experience', icon: <Briefcase size={18} /> },
-    { name: 'Projects', href: '/projects', icon: <FolderKanban size={18} /> },
-    { name: 'Certificates', href: '/certificates', icon: <Award size={18} /> },
-    { name: 'Resume', href: '/resume', icon: <FileText size={18} /> },
-    { name: 'Contact', href: '/contact', icon: <Mail size={18} /> },
+    { name: 'Home', href: 'home', icon: <Home size={18} /> },
+    { name: 'About', href: 'about', icon: <UserRound size={18} /> },
+    { name: 'Skills', href: 'skills', icon: <Cpu size={18} /> },
+    { name: 'Experience', href: 'experience', icon: <Briefcase size={18} /> },
+    { name: 'Projects', href: 'projects', icon: <FolderKanban size={18} /> },
+    { name: 'Certificates', href: 'certificates', icon: <Award size={18} /> },
+    { name: 'Resume', href: 'resume', icon: <FileText size={18} /> },
+    { name: 'Contact', href: 'contact', icon: <Mail size={18} /> },
   ];
 
   const goToPage = (href: string) => {

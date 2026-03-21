@@ -1,6 +1,6 @@
 import React from 'react';
 import { Award } from 'lucide-react';
-import PixelSnow from './PixelSnow';
+import AutoScrollRow from './AutoScrollRow';
 
 type Certificate = {
   name: string;
@@ -110,59 +110,42 @@ const certificates: Certificate[] = [
   }
 ];
 
-const splitRows = <T,>(items: T[]) => {
-  const rowOne: T[] = [];
-  const rowTwo: T[] = [];
-  items.forEach((item, i) => (i % 2 === 0 ? rowOne.push(item) : rowTwo.push(item)));
-  return [rowOne, rowTwo];
-};
-
 const Certificates = () => {
-  const [rowOne, rowTwo] = splitRows(certificates);
-  const renderRow = (items: Certificate[]) => (
-    <div className="scroll-row" tabIndex={0} aria-label="Scrollable certificates row">
-      <div className="scroll-track">
-        {items.map((cert) => (
-          <a
-            key={cert.name}
-            href={cert.image}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="scroll-card certificate-card"
-          >
-            <div className="relative overflow-hidden rounded-t-xl bg-gray-800">
-              <img src={cert.image} alt={cert.name} className="h-44 w-full object-contain transition-transform duration-300 hover:scale-105" />
-              <div className="absolute right-3 top-3 rounded-full border border-yellow-400/30 bg-yellow-500/20 p-2">
-                <Award className="h-5 w-5 text-yellow-300" />
-              </div>
+  const renderRow = (items: Certificate[], direction: 1 | -1, rowLabel: string) => (
+    <AutoScrollRow
+      items={items}
+      direction={direction}
+      ariaLabel={rowLabel}
+      pauseDelayMs={3000}
+      speedPxPerSecond={32}
+      renderItem={(cert, index) => (
+        <a
+          key={`${cert.name}-${index}`}
+          href={cert.image}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="scroll-card certificate-card"
+        >
+          <div className="relative overflow-hidden rounded-t-xl bg-gray-800">
+            <img src={cert.image} alt={cert.name} className="h-44 w-full object-contain transition-transform duration-300 hover:scale-105" />
+            <div className="absolute right-3 top-3 rounded-full border border-yellow-400/30 bg-yellow-500/20 p-2">
+              <Award className="h-5 w-5 text-yellow-300" />
             </div>
-            <div className="p-5">
-              <h3 className="mb-1 text-lg font-semibold text-white">{cert.name}</h3>
-              <p className="text-sm font-medium text-gray-300">{cert.organization}</p>
-              <p className="mb-2 text-xs font-mono text-gray-500">{cert.date}</p>
-              <p className="mb-3 text-sm text-gray-400">{cert.description}</p>
-              <p className="text-sm italic text-gray-300">{cert.learning}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
+          </div>
+          <div className="p-5">
+            <h3 className="mb-1 text-lg font-semibold text-white">{cert.name}</h3>
+            <p className="text-sm font-medium text-gray-300">{cert.organization}</p>
+            <p className="mb-2 text-xs font-mono text-gray-500">{cert.date}</p>
+            <p className="mb-3 text-sm text-gray-400">{cert.description}</p>
+            <p className="text-sm italic text-gray-300">{cert.learning}</p>
+          </div>
+        </a>
+      )}
+    />
   );
 
   return (
-    <section id="certificates" className="relative overflow-hidden bg-black py-20">
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <PixelSnow
-          className="h-full w-full opacity-35"
-          color="#c7d2fe"
-          variant="round"
-          density={0.2}
-          brightness={0.85}
-          speed={1.05}
-          pixelResolution={220}
-          direction={132}
-        />
-      </div>
+    <section id="certificates" className="relative overflow-hidden bg-black pt-20 pb-36">
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/5 to-black/30 pointer-events-none z-[1]" />
       <div className="relative z-10 mx-auto mb-12 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
@@ -176,8 +159,7 @@ const Certificates = () => {
       </div>
 
       <div className="space-y-6 relative z-10">
-        {renderRow(rowOne)}
-        {renderRow(rowTwo)}
+        {renderRow(certificates, 1, 'Certificates sliding left to right')}
       </div>
     </section>
   );

@@ -1,6 +1,4 @@
-
 import { Building2, Calendar, MapPin, ExternalLink } from 'lucide-react';
-import PixelSnow from './PixelSnow';
 
 const Experience = () => {
   const experiences = [
@@ -38,19 +36,7 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 bg-black relative overflow-hidden">
-    <div className="absolute inset-0 pointer-events-none z-0">
-      <PixelSnow
-        className="h-full w-full opacity-55"
-        color="#dbeafe"
-        variant="round"
-        density={0.28}
-        brightness={1.15}
-        speed={0.95}
-        pixelResolution={210}
-        direction={118}
-      />
-    </div>
+    <section id="experience" className="py-20 relative overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-b from-black/22 via-black/5 to-black/22 pointer-events-none z-[1]" />
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div 
