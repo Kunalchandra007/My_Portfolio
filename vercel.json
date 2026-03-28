@@ -1,0 +1,60 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "kunalchandra.tech"
+        }
+      ],
+      "destination": "https://kunalchandra.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.kunalchandra.tech"
+        }
+      ],
+      "destination": "https://kunalchandra.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "kunalchandra.me"
+        }
+      ],
+      "destination": "https://kunalchandra.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.kunalchandra.me"
+        }
+      ],
+      "destination": "https://kunalchandra.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.kunalchandra.dev"
+        }
+      ],
+      "destination": "https://kunalchandra.dev/:path*",
+      "permanent": true
+    }
+  ]
+}
