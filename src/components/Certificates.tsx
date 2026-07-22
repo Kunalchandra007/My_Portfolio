@@ -1,6 +1,7 @@
-import React from 'react';
 import { Award } from 'lucide-react';
 import AutoScrollRow from './AutoScrollRow';
+import SectionHeader from './story/SectionHeader';
+import Reveal from './story/Reveal';
 
 type Certificate = {
   name: string;
@@ -126,18 +127,18 @@ const Certificates = () => {
           rel="noopener noreferrer"
           className="scroll-card certificate-card"
         >
-          <div className="relative overflow-hidden rounded-t-xl bg-gray-800">
+          <div className="relative overflow-hidden rounded-t-xl bg-surface-2">
             <img src={cert.image} alt={cert.name} className="h-44 w-full object-contain transition-transform duration-300 hover:scale-105" />
-            <div className="absolute right-3 top-3 rounded-full border border-yellow-400/30 bg-yellow-500/20 p-2">
-              <Award className="h-5 w-5 text-yellow-300" />
+            <div className="absolute right-3 top-3 rounded-full border border-ember/30 bg-ember/15 p-2">
+              <Award className="h-5 w-5 text-ember" />
             </div>
           </div>
           <div className="p-5">
-            <h3 className="mb-1 text-lg font-semibold text-white">{cert.name}</h3>
-            <p className="text-sm font-medium text-gray-300">{cert.organization}</p>
-            <p className="mb-2 text-xs font-mono text-gray-500">{cert.date}</p>
-            <p className="mb-3 text-sm text-gray-400">{cert.description}</p>
-            <p className="text-sm italic text-gray-300">{cert.learning}</p>
+            <h3 className="mb-1 font-serif text-lg text-ink">{cert.name}</h3>
+            <p className="text-sm font-medium text-ice">{cert.organization}</p>
+            <p className="mb-2 telemetry text-[0.55rem] text-ink-faint">{cert.date}</p>
+            <p className="mb-3 text-sm leading-relaxed text-ink-dim">{cert.description}</p>
+            <p className="text-sm italic text-ink-dim">{cert.learning}</p>
           </div>
         </a>
       )}
@@ -145,20 +146,20 @@ const Certificates = () => {
   );
 
   return (
-    <section id="certificates" className="relative overflow-hidden bg-black pt-20 pb-36">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/5 to-black/30 pointer-events-none z-[1]" />
-      <div className="relative z-10 mx-auto mb-12 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="mb-4 text-4xl font-bold text-white">
-            Certificates & <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Achievements</span>
-          </h2>
-          <p className="mx-auto max-w-3xl text-xl text-gray-300">
-            Certifications and achievements that show continuous learning and practical growth.
-          </p>
-        </div>
+    <section id="certificates" className="relative pt-24 pb-36">
+      <div className="relative mx-auto mb-14 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <SectionHeader
+            index="06"
+            label="Commendations"
+            title="Certificates & Achievements"
+            subtitle="Certifications and achievements that show continuous learning and practical growth."
+            align="center"
+          />
+        </Reveal>
       </div>
 
-      <div className="space-y-6 relative z-10">
+      <div className="relative space-y-6">
         {renderRow(certificates, 1, 'Certificates sliding left to right')}
       </div>
     </section>

@@ -1,6 +1,7 @@
-import React from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import AutoScrollRow from './AutoScrollRow';
+import SectionHeader from './story/SectionHeader';
+import Reveal from './story/Reveal';
 
 type Project = {
   title: string;
@@ -110,16 +111,16 @@ const Projects = () => {
             <img src={project.image} alt={project.title} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
           </div>
           <div className="p-5">
-            <h3 className="mb-2 text-lg font-semibold text-white">{project.title}</h3>
-            <p className="mb-4 text-sm text-gray-400">{project.description}</p>
+            <h3 className="mb-2 font-serif text-lg text-ink">{project.title}</h3>
+            <p className="mb-4 text-sm leading-relaxed text-ink-dim">{project.description}</p>
             <div className="mb-4 flex flex-wrap gap-2">
               {project.tags.slice(0, 4).map((tag) => (
-                <span key={`${project.title}-${tag}-${index}`} className="rounded-full border border-gray-700/80 bg-gray-800/70 px-2 py-1 text-xs text-gray-300">
+                <span key={`${project.title}-${tag}-${index}`} className="telemetry text-[0.55rem] rounded-full border border-hairline bg-surface-2 px-2 py-1 text-ink-dim">
                   {tag}
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-4 text-sm text-gray-300">
+            <div className="flex items-center gap-4 text-sm text-ink-dim">
               <span className="inline-flex items-center gap-1">
                 <Github size={16} />
                 Code
@@ -136,18 +137,20 @@ const Projects = () => {
   );
 
   return (
-    <section id="projects" className="relative overflow-hidden bg-black py-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/5 to-black/30 pointer-events-none z-[1]" />
-      <div className="relative z-10 mx-auto mb-12 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="mb-4 text-4xl font-bold text-white">Projects</h2>
-          <p className="mx-auto max-w-3xl text-xl text-gray-300">
-            A collection of my recent work in data science, machine learning, and software development.
-          </p>
-        </div>
+    <section id="projects" className="relative py-24">
+      <div className="relative mx-auto mb-14 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <SectionHeader
+            index="05"
+            label="Expeditions"
+            title="Projects"
+            subtitle="A collection of my recent work in data science, machine learning, and software development."
+            align="center"
+          />
+        </Reveal>
       </div>
 
-      <div className="space-y-6 relative z-10">
+      <div className="relative space-y-6">
         {renderRow(projects, 1, 'Projects sliding left to right')}
       </div>
     </section>

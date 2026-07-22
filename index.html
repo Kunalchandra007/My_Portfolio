@@ -8,7 +8,13 @@
     <meta name="author" content="Kunal Chandra" />
     <link rel="canonical" href="https://kunalchandra.dev/" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#05060a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <meta property="og:title" content="Kunal Chandra | Data Scientist and ML Engineer Portfolio" />
     <meta property="og:description" content="Portfolio of Kunal Chandra, a Haridwar University CSE student building projects in data science, machine learning, DSA, and software development." />
     <meta property="og:type" content="website" />
@@ -78,23 +84,28 @@
       html {
         scroll-behavior: smooth;
       }
-      
-      /* Custom scrollbar */
+
+      /* Custom scrollbar — nebula */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 9px;
       }
-      
+
       ::-webkit-scrollbar-track {
-        background: #1f2937;
+        background: #07080e;
       }
-      
+
       ::-webkit-scrollbar-thumb {
-        background: linear-gradient(45deg, #06b6d4, #3b82f6);
+        background: linear-gradient(180deg, #8b5cf6, #7cc7ff);
         border-radius: 4px;
       }
-      
+
       ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(45deg, #0891b2, #2563eb);
+        background: linear-gradient(180deg, #a78bfa, #a6d8ff);
+      }
+
+      ::selection {
+        background: rgba(139, 92, 246, 0.35);
+        color: #f4f2ff;
       }
 
       /* Futuristic glow effects */
@@ -102,13 +113,13 @@
         0%, 100% { opacity: 1; }
         50% { opacity: 0.5; }
       }
-      
+
       .animate-glow {
         animation: glow 2s ease-in-out infinite;
       }
     </style>
   </head>
-  <body class="bg-black">
+  <body class="bg-[#05060a]">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

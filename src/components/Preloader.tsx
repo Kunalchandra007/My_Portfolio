@@ -1,237 +1,69 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import Galaxy from './Galaxy';
 
 type Props = {
   onFinish?: () => void;
 };
 
-type Spark = { x: number; y: number; vx: number; vy: number; life: number; maxLife: number };
-
-const PRELOADER_END_MS = 4000;
-const METEOR_START_MS = 850;
-const METEOR_IMPACT_MS = 1550;
-const NAME_REVEAL_MS = 1900;
-const FADE_START_MS = 3400;
+const PRELOADER_END_MS = 2600;
+const NAME_REVEAL_MS = 1500;
+const FADE_START_MS = 2200;
 
 const Preloader: React.FC<Props> = ({ onFinish }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const planetRef = useRef<HTMLDivElement | null>(null);
+  const [progress, setProgress] = useState(0);
   const [showName, setShowName] = useState(false);
-  const [planetHit, setPlanetHit] = useState(false);
   const [isFading, setIsFading] = useState(false);
-  const [shake, setShake] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const reducedMotion = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
-  const lowPerfMode = useMemo(() => {
-    const cores = navigator.hardwareConcurrency ?? 4;
-    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 4;
-    return cores <= 4 || memory <= 4;
-  }, []);
+  const rafRef = useRef(0);
+  const reducedMotion = useMemo(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    []
+  );
 
   useEffect(() => {
-    let raf = 0;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const context = canvas.getContext('2d');
-    if (!context) return;
-
-    const ctx = context;
-    const dpr = Math.min(window.devicePixelRatio || 1, lowPerfMode ? 1 : 1.5);
-    const sparks: Spark[] = [];
-    let meteorActive = false;
-    const meteorStartX = -220;
-    const meteorStartY = -140;
-    let meteorX = meteorStartX;
-    let meteorY = meteorStartY;
-    let impactTriggered = false;
-    let nameRevealTriggered = false;
-    let fadeTriggered = false;
-    let disposed = false;
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-
-    const updateImpactTarget = () => {
-      const planetRect = planetRef.current?.getBoundingClientRect();
-      if (!planetRect) {
-        targetX = window.innerWidth / 2;
-        targetY = window.innerHeight / 2;
-        return;
-      }
-      targetX = planetRect.left + planetRect.width / 2;
-      targetY = planetRect.top + planetRect.height / 2;
-    };
-
-    const resize = () => {
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      updateImpactTarget();
-    };
-
-    const spawnImpact = (x: number, y: number) => {
-      const sparkCount = lowPerfMode ? 48 : 80;
-      for (let i = 0; i < sparkCount; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 6 + 1.8;
-        const maxLife = Math.random() * 56 + 40;
-        sparks.push({
-          x,
-          y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          life: maxLife,
-          maxLife,
-        });
-      }
-    };
-
-    const maybePlayWhoosh = () => {
-      try {
-        const AudioCtx =
-          window.AudioContext ||
-          (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-        if (!AudioCtx) return;
-        const audio = new AudioCtx();
-        const oscillator = audio.createOscillator();
-        const gain = audio.createGain();
-        oscillator.type = 'triangle';
-        oscillator.frequency.setValueAtTime(1400, audio.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(80, audio.currentTime + 0.42);
-        gain.gain.setValueAtTime(0.0001, audio.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.18, audio.currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.5);
-        oscillator.connect(gain);
-        gain.connect(audio.destination);
-        oscillator.start();
-        oscillator.stop(audio.currentTime + 0.52);
-      } catch {
-        // Ignore autoplay and audio context errors.
-      }
-    };
-
-    resize();
-    window.addEventListener('resize', resize);
-
     if (reducedMotion) {
-      const revealTimer = window.setTimeout(() => {
-        setShowName(true);
-      }, 400);
+      setProgress(100);
+      setShowName(true);
       const finishTimer = window.setTimeout(() => {
         setIsVisible(false);
         onFinish?.();
-      }, 1100);
-      return () => {
-        window.clearTimeout(revealTimer);
-        window.clearTimeout(finishTimer);
-        window.removeEventListener('resize', resize);
-      };
+      }, 900);
+      return () => window.clearTimeout(finishTimer);
     }
 
     const start = performance.now();
-    const meteorTravelMs = METEOR_IMPACT_MS - METEOR_START_MS;
-    updateImpactTarget();
-
-    const targetFps = lowPerfMode ? 30 : 45;
-    const frameInterval = 1000 / targetFps;
-    let lastFrameAt = 0;
+    let disposed = false;
+    let nameTriggered = false;
+    let fadeTriggered = false;
 
     const frame = (now: number) => {
       if (disposed) return;
-      if (lastFrameAt !== 0 && now - lastFrameAt < frameInterval) {
-        raf = requestAnimationFrame(frame);
-        return;
-      }
-      lastFrameAt = now;
+      const t = now - start;
+      const pct = Math.min((t / (FADE_START_MS - 200)) * 100, 100);
+      setProgress(pct);
 
-      const t = performance.now() - start;
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      if (t >= METEOR_START_MS && t < METEOR_IMPACT_MS) {
-        if (!meteorActive) {
-          meteorActive = true;
-          maybePlayWhoosh();
-        }
-
-        const progress = Math.min(Math.max((t - METEOR_START_MS) / meteorTravelMs, 0), 1);
-        meteorX = meteorStartX + (targetX - meteorStartX) * progress;
-        meteorY = meteorStartY + (targetY - meteorStartY) * progress;
-        const angle = Math.atan2(targetY - meteorStartY, targetX - meteorStartX);
-        const tail = ctx.createLinearGradient(
-          meteorX,
-          meteorY,
-          meteorX - Math.cos(angle) * 340,
-          meteorY - Math.sin(angle) * 340
-        );
-        tail.addColorStop(0, 'rgba(255,255,225,0.96)');
-        tail.addColorStop(0.45, 'rgba(255,170,120,0.5)');
-        tail.addColorStop(1, 'rgba(255,170,120,0)');
-        ctx.strokeStyle = tail;
-        ctx.lineWidth = 18;
-        ctx.beginPath();
-        ctx.moveTo(meteorX, meteorY);
-        ctx.lineTo(meteorX - Math.cos(angle) * 320, meteorY - Math.sin(angle) * 320);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(255,234,198,1)';
-        ctx.ellipse(meteorX, meteorY, 28, 14, angle, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      if (t >= METEOR_IMPACT_MS && !impactTriggered) {
-        impactTriggered = true;
-        spawnImpact(targetX, targetY);
-        setPlanetHit(true);
-        setShake(true);
-        window.setTimeout(() => setShake(false), 280);
-      }
-
-      for (let i = sparks.length - 1; i >= 0; i--) {
-        const spark = sparks[i];
-        spark.x += spark.vx;
-        spark.y += spark.vy;
-        spark.vy += 0.11;
-        spark.vx *= 0.99;
-        spark.life -= 1;
-        const alpha = Math.max(spark.life / spark.maxLife, 0);
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255,132,70,${alpha})`;
-        ctx.arc(spark.x, spark.y, 2, 0, Math.PI * 2);
-        ctx.fill();
-        if (spark.life <= 0) sparks.splice(i, 1);
-      }
-
-      if (t >= NAME_REVEAL_MS && !nameRevealTriggered) {
-        nameRevealTriggered = true;
+      if (t >= NAME_REVEAL_MS && !nameTriggered) {
+        nameTriggered = true;
         setShowName(true);
       }
-
       if (t >= FADE_START_MS && !fadeTriggered) {
         fadeTriggered = true;
         setIsFading(true);
       }
-
       if (t >= PRELOADER_END_MS) {
         disposed = true;
         setIsVisible(false);
         onFinish?.();
         return;
       }
-
-      raf = requestAnimationFrame(frame);
+      rafRef.current = requestAnimationFrame(frame);
     };
 
-    raf = requestAnimationFrame(frame);
-
+    rafRef.current = requestAnimationFrame(frame);
     return () => {
       disposed = true;
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(rafRef.current);
     };
-  }, [lowPerfMode, onFinish, reducedMotion]);
+  }, [onFinish, reducedMotion]);
 
   useEffect(() => {
     if (!isVisible) return;
@@ -245,33 +77,53 @@ const Preloader: React.FC<Props> = ({ onFinish }) => {
 
   return (
     <div
-      className={`preloader-root fixed inset-0 z-[999] flex items-center justify-center bg-black text-white ${
-        shake ? 'preloader-shake' : ''
-      } ${isFading ? 'preloader-fade-out' : ''}`}
+      className={`preloader-root fixed inset-0 z-[999] flex items-center justify-center bg-void ${
+        isFading ? 'preloader-fade-out' : ''
+      }`}
     >
-      <Galaxy
-        className="absolute inset-0 h-full w-full"
-        mouseInteraction={false}
-        transparent
-        density={lowPerfMode ? 0.52 : 0.72}
-        glowIntensity={lowPerfMode ? 0.16 : 0.24}
-        twinkleIntensity={lowPerfMode ? 0.1 : 0.16}
-        speed={lowPerfMode ? 0.55 : 0.75}
-        rotationSpeed={lowPerfMode ? 0.04 : 0.08}
-        hueShift={220}
-      />
-      <div className="absolute inset-0 bg-black/45" />
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      <div className="relative z-10 flex flex-col items-center gap-4 px-6 text-center">
-        <div ref={planetRef} className={`preloader-planet ${planetHit ? 'preloader-planet-hit' : ''}`} aria-hidden>
-          <span className="preloader-planet-emoji">🌍</span>
+      {/* Cosmic backdrop */}
+      <div className="absolute inset-0">
+        <div className="nebula-blob nebula-1" />
+        <div className="nebula-blob nebula-3" />
+      </div>
+      <div className="absolute inset-0 bg-void/40" />
+
+      <div className="relative z-10 flex flex-col items-center gap-10 px-6 text-center">
+        {/* Orbital loader */}
+        <div className="relative flex h-36 w-36 items-center justify-center">
+          <div className="pl-arc absolute inset-0" />
+          <div className="pl-arc absolute inset-4 opacity-60" style={{ animationDuration: '1.7s', animationDirection: 'reverse' }} />
+          <div className="pl-core h-16 w-16" />
+          {/* Orbiting satellite */}
+          {!reducedMotion && (
+            <div className="absolute inset-0 animate-[pl-spin_2.4s_linear_infinite]">
+              <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ice shadow-[0_0_10px_rgba(124,199,255,0.9)]" />
+            </div>
+          )}
         </div>
-        {showName && (
-          <p className="preloader-name">
-            <span className="block">H O L A</span>
-            <span className="block">A M I G O !</span>
+
+        {/* Telemetry + name */}
+        <div className="flex flex-col items-center gap-4">
+          <span className="telemetry text-[0.62rem] text-ink-faint">
+            Initializing flight systems
+          </span>
+
+          <p
+            className={`preloader-name transition-opacity duration-500 ${
+              showName ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            Hola, Amigo
           </p>
-        )}
+
+          {/* Progress bar */}
+          <div className="mt-2 h-px w-56 overflow-hidden rounded-full bg-hairline">
+            <div className="pl-bar-fill h-full" style={{ width: `${progress}%` }} />
+          </div>
+          <span className="telemetry text-[0.6rem] text-ink-faint">
+            {String(Math.round(progress)).padStart(3, '0')} %
+          </span>
+        </div>
       </div>
     </div>
   );

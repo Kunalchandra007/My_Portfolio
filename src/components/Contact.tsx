@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Phone, MapPin, Send, Linkedin, Github, Twitter } from 'lucide-react';
+import SectionHeader from './story/SectionHeader';
+import Reveal from './story/Reveal';
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -19,9 +17,7 @@ const Contact = () => {
     try {
       const response = await fetch('https://formspree.io/f/mrbylezy', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -44,213 +40,170 @@ const Contact = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const inputClass =
+    'w-full rounded-lg border border-hairline bg-surface-2 px-4 py-3 text-ink placeholder-ink-faint transition-all duration-300 focus:border-nebula-soft/50 focus:outline-none focus:ring-2 focus:ring-nebula/40';
+
+  const infoRows = [
+    { icon: <Mail className="h-6 w-6 text-ice" />, label: 'Email', value: 'kunalworkrelated@gmail.com' },
+    { icon: <Phone className="h-6 w-6 text-ice" />, label: 'Phone', value: '+91 9911566654', mono: true },
+    { icon: <MapPin className="h-6 w-6 text-ice" />, label: 'Location', value: 'Haridwar, Uttarakhand, India' },
+  ];
+
+  const socials = [
+    { href: 'https://www.linkedin.com/in/kunal-chandra007', icon: <Linkedin size={22} />, label: 'LinkedIn' },
+    { href: 'https://github.com/Kunalchandra007', icon: <Github size={22} />, label: 'GitHub' },
+    { href: 'https://x.com/KunalChandra777', icon: <Twitter size={22} />, label: 'Twitter' },
+  ];
+
   return (
-    <section id="contact" className="pt-20 pb-10 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/20 via-transparent to-gray-900/20 pointer-events-none z-[1]" />
+    <section id="contact" className="pt-24 pb-16 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <SectionHeader
+            index="08"
+            label="Open Channel"
+            title="Get In Touch"
+            subtitle="I'm always open to discussing new opportunities, collaborations, or just having a chat about data science and technology."
+            align="center"
+          />
+        </Reveal>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div 
-          className="text-center mb-16"
-          data-aos="fade-up"
-          data-aos-duration="800"
-        >
-          <h2 className="text-4xl font-bold text-white dark:text-white text-gray-900 mb-4">
-            Get In <span className="bg-gradient-to-r from-cyan-400 to-purple-500 dark:from-cyan-400 dark:to-purple-500 from-cyan-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
-          </h2>
-          <p className="text-xl text-gray-300 dark:text-gray-300 text-gray-600 max-w-3xl mx-auto">
-            I'm always open to discussing new opportunities, collaborations, or just having a chat about data science and technology.
+        <div className="mt-16 grid gap-12 lg:grid-cols-2">
+          {/* Contact information */}
+          <Reveal>
+            <div className="space-y-8">
+              <div>
+                <h3 className="mb-4 font-serif text-2xl text-ink">Let's Connect</h3>
+                <p className="leading-relaxed text-ink-dim">
+                  Feel free to reach out to me for any inquiries, project collaborations, or just to
+                  say hello. I'm always excited to connect with fellow{' '}
+                  <span className="text-ice">data enthusiasts</span> and professionals.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {infoRows.map((row) => (
+                  <div key={row.label} className="flex items-center gap-4">
+                    <div className="rounded-full border border-hairline bg-nebula/10 p-3">{row.icon}</div>
+                    <div>
+                      <h4 className="telemetry text-[0.6rem] text-ink-faint">{row.label}</h4>
+                      <p className={`text-ink ${row.mono ? 'font-mono text-sm' : ''}`}>{row.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4">
+                <h4 className="telemetry mb-4 text-[0.6rem] text-ink-faint">Follow Me</h4>
+                <div className="flex gap-4">
+                  {socials.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="rounded-full border border-hairline bg-surface-2 p-3 text-ink-dim transition-all duration-300 hover:-translate-y-0.5 hover:border-nebula-soft/50 hover:text-ice"
+                    >
+                      {s.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Contact form */}
+          <Reveal delay={1}>
+            <div className="panel p-8">
+              <h3 className="mb-6 font-serif text-2xl text-ink">Send Message</h3>
+              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-ink-dim">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className={inputClass}
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-ink-dim">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className={inputClass}
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="mb-2 block text-sm font-medium text-ink-dim">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={6}
+                    className={`${inputClass} resize-none`}
+                    placeholder="Tell me about your project or just say hello..."
+                  />
+                </div>
+
+                {submitStatus === 'success' && (
+                  <div className="rounded-lg border border-ice/30 bg-ice/10 p-4 text-center text-ice">
+                    Thank you for your message! I'll get back to you soon.
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="rounded-lg border border-ember/30 bg-ember/10 p-4 text-center text-ember">
+                    Something went wrong. Please try again or contact me directly.
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 font-medium transition-all duration-300 ${
+                    isSubmitting
+                      ? 'cursor-not-allowed border border-hairline bg-surface-2 text-ink-faint'
+                      : 'bg-gradient-to-r from-nebula to-nebula-soft text-white shadow-[0_0_28px_-6px_rgba(139,92,246,0.7)] hover:brightness-110 hover:shadow-[0_0_36px_-4px_rgba(139,92,246,0.9)]'
+                  }`}
+                >
+                  <Send size={20} />
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                </button>
+              </form>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Sign-off */}
+        <Reveal delay={2}>
+          <p className="telemetry mt-16 text-center text-[0.6rem] text-ink-faint">
+            End of transmission · Kunal Chandra · {new Date().getFullYear()}
           </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <div 
-            className="space-y-8"
-            data-aos="fade-right"
-            data-aos-duration="800"
-            data-aos-delay="200"
-          >
-            <div>
-              <h3 className="text-2xl font-semibold text-white dark:text-white text-gray-900 mb-6">Let's Connect</h3>
-              <p className="text-gray-400 dark:text-gray-400 text-gray-600 mb-8">
-                Feel free to reach out to me for any inquiries, project collaborations, or just to say hello. 
-                I'm always excited to connect with fellow <span className="text-cyan-400 dark:text-cyan-400 text-blue-600">data enthusiasts</span> and professionals.
-              </p>
-            </div>
-            
-            <div className="space-y-6">
-              <div 
-                className="flex items-center space-x-4 group"
-                data-aos="fade-up"
-                data-aos-duration="400"
-                data-aos-delay="400"
-              >
-                <div className="bg-gradient-to-r from-cyan-500/20 to-blue-600/20 dark:from-cyan-500/20 dark:to-blue-600/20 from-blue-500/20 to-indigo-600/20 p-3 rounded-full border border-cyan-500/30 dark:border-cyan-500/30 border-blue-500/30 group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/50 group-hover:border-blue-400/50 transition-all duration-300">
-                  <Mail className="w-6 h-6 text-cyan-400 dark:text-cyan-400 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-white dark:text-white text-gray-900">Email</h4>
-                  <p className="text-gray-400 dark:text-gray-400 text-gray-600">kunalworkrelated@gmail.com</p>
-                </div>
-              </div>
-              
-              <div 
-                className="flex items-center space-x-4 group"
-                data-aos="fade-up"
-                data-aos-duration="400"
-                data-aos-delay="500"
-              >
-                <div className="bg-gradient-to-r from-blue-500/20 to-purple-600/20 dark:from-blue-500/20 dark:to-purple-600/20 from-indigo-500/20 to-purple-600/20 p-3 rounded-full border border-blue-500/30 dark:border-blue-500/30 border-indigo-500/30 group-hover:border-blue-400/50 dark:group-hover:border-blue-400/50 group-hover:border-indigo-400/50 transition-all duration-300">
-                  <Phone className="w-6 h-6 text-blue-400 dark:text-blue-400 text-indigo-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-white dark:text-white text-gray-900">Phone</h4>
-                  <p className="text-gray-400 dark:text-gray-400 text-gray-600 font-mono">+91 9911566654</p>
-                </div>
-              </div>
-              
-              <div 
-                className="flex items-center space-x-4 group"
-                data-aos="fade-up"
-                data-aos-duration="400"
-                data-aos-delay="600"
-              >
-                <div className="bg-gradient-to-r from-purple-500/20 to-pink-600/20 dark:from-purple-500/20 dark:to-pink-600/20 from-purple-500/20 to-pink-600/20 p-3 rounded-full border border-purple-500/30 dark:border-purple-500/30 border-purple-500/30 group-hover:border-purple-400/50 dark:group-hover:border-purple-400/50 group-hover:border-purple-400/50 transition-all duration-300">
-                  <MapPin className="w-6 h-6 text-purple-400 dark:text-purple-400 text-purple-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-white dark:text-white text-gray-900">Location</h4>
-                  <p className="text-gray-400 dark:text-gray-400 text-gray-600">Haridwar, Uttarakhand, India</p>
-                </div>
-              </div>
-            </div>
-            
-            <div 
-              className="pt-8"
-              data-aos="fade-up"
-              data-aos-duration="400"
-              data-aos-delay="700"
-            >
-              <h4 className="font-semibold text-white dark:text-white text-gray-900 mb-4">Follow Me</h4>
-              <div className="flex space-x-4">
-                <a
-                  href="https://www.linkedin.com/in/kunal-chandra007"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-blue-600/20 to-blue-700/20 dark:from-blue-600/20 dark:to-blue-700/20 from-blue-600/20 to-blue-700/20 text-blue-400 dark:text-blue-400 text-blue-600 p-3 rounded-full border border-blue-500/30 dark:border-blue-500/30 border-blue-500/30 hover:border-blue-400/50 dark:hover:border-blue-400/50 hover:border-blue-400/50 hover:bg-blue-600/30 dark:hover:bg-blue-600/30 hover:bg-blue-600/30 transition-all duration-300 hover:scale-110"
-                >
-                  <Linkedin size={24} />
-                </a>
-                <a
-                  href="https://github.com/Kunalchandra007"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-gray-700/20 to-gray-800/20 dark:from-gray-700/20 dark:to-gray-800/20 from-gray-700/20 to-gray-800/20 text-gray-400 dark:text-gray-400 text-gray-600 p-3 rounded-full border border-gray-600/30 dark:border-gray-600/30 border-gray-600/30 hover:border-gray-400/50 dark:hover:border-gray-400/50 hover:border-gray-400/50 hover:bg-gray-700/30 dark:hover:bg-gray-700/30 hover:bg-gray-700/30 transition-all duration-300 hover:scale-110"
-                >
-                  <Github size={24} />
-                </a>
-                <a
-                  href="https://x.com/KunalChandra777"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-cyan-500/20 to-blue-600/20 dark:from-cyan-500/20 dark:to-blue-600/20 from-cyan-500/20 to-blue-600/20 text-cyan-400 dark:text-cyan-400 text-cyan-600 p-3 rounded-full border border-cyan-500/30 dark:border-cyan-500/30 border-cyan-500/30 hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:border-cyan-400/50 hover:bg-cyan-500/30 dark:hover:bg-cyan-500/30 hover:bg-cyan-500/30 transition-all duration-300 hover:scale-110"
-                >
-                  <Twitter size={24} />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Form */}
-          <div 
-            className="bg-gray-900/50 dark:bg-gray-900/50 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-700/50 dark:border-gray-700/50 border-gray-200/50 p-8 hover:border-cyan-500/30 dark:hover:border-cyan-500/30 hover:border-blue-500/30 transition-all duration-300"
-            data-aos="fade-left"
-            data-aos-duration="800"
-            data-aos-delay="200"
-          >
-            <h3 className="text-2xl font-semibold text-white dark:text-white text-gray-900 mb-6">Send Message</h3>
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400/50 transition-all duration-300 text-white placeholder-gray-400"
-                  placeholder="Your full name"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400/50 transition-all duration-300 text-white placeholder-gray-400"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-lg focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400/50 transition-all duration-300 text-white placeholder-gray-400 resize-none"
-                  placeholder="Tell me about your project or just say hello..."
-                />
-              </div>
-              
-              {submitStatus === 'success' && (
-                <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400 text-center">
-                  Thank you for your message! I'll get back to you soon.
-                </div>
-              )}
-              
-              {submitStatus === 'error' && (
-                <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-center">
-                  Something went wrong. Please try again or contact me directly.
-                </div>
-              )}
-              
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 border flex items-center justify-center space-x-2 ${
-                  isSubmitting 
-                    ? 'bg-gray-600 text-gray-400 border-gray-600 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25 border-cyan-400/30'
-                }`}
-              >
-                <Send size={20} />
-                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-              </button>
-            </form>
-          </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

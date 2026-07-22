@@ -11,11 +11,11 @@
   gap: 12px;
   padding: 8px 12px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(8, 8, 14, 0.62);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  background: rgba(11, 13, 22, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(167, 139, 250, 0.08);
 }
 
 .dock-item {
@@ -26,8 +26,8 @@
   border: none;
   outline: none;
   border-radius: 999px;
-  background: rgba(16, 16, 24, 0.42);
-  color: #e5e7eb;
+  background: rgba(18, 20, 32, 0.5);
+  color: #a6a7c4;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
   backdrop-filter: blur(6px);
@@ -36,8 +36,8 @@
 
 .dock-item:hover,
 .dock-item:focus-visible {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: rgba(139, 92, 246, 0.18);
+  color: #7cc7ff;
 }
 
 .dock-icon {
@@ -51,12 +51,13 @@
   left: 50%;
   bottom: calc(100% + 10px);
   white-space: nowrap;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: #fff;
+  letter-spacing: 0.02em;
+  color: #eceafd;
   padding: 5px 9px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(8, 8, 12, 0.92);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  background: rgba(11, 13, 22, 0.94);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }

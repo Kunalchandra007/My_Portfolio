@@ -56,20 +56,24 @@ const Header = () => {
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-black/95 backdrop-blur-md border-b border-white/20 shadow-lg shadow-white/10'
+          ? 'bg-void/85 backdrop-blur-md border-b border-hairline'
           : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between py-4">
-            <div className="text-2xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent">
+            <button
+              onClick={() => goToPage('home')}
+              className="font-serif text-2xl text-cosmic"
+            >
               Kunal Chandra
-            </div>
+            </button>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden relative z-20">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-lg hover:bg-gray-800/50 transition-colors text-gray-300 hover:text-white"
+                className="p-2 rounded-lg text-ink-dim transition-colors hover:bg-surface-2 hover:text-ice"
+                aria-label="Toggle menu"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -78,14 +82,15 @@ const Header = () => {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-700/50">
-              <nav className="flex flex-col space-y-2">
+            <div className="md:hidden py-4 border-t border-hairline">
+              <nav className="flex flex-col space-y-1">
                 {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => goToPage(item.href)}
-                    className="text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800/30 rounded-lg transition-all duration-300"
+                    className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-left text-ink-dim transition-all duration-300 hover:bg-surface-2 hover:text-ice"
                   >
+                    <span className="text-ice/70">{item.icon}</span>
                     {item.name}
                   </button>
                 ))}

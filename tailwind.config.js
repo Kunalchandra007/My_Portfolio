@@ -4,12 +4,38 @@ export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
   	extend: {
+  		fontFamily: {
+  			serif: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
+  			sans: ['Sora', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+  			mono: ['"Space Mono"', 'ui-monospace', 'monospace']
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			void: '#05060a',
+  			surface: {
+  				DEFAULT: '#0b0d16',
+  				2: '#12142099'
+  			},
+  			nebula: {
+  				DEFAULT: '#8b5cf6',
+  				soft: '#a78bfa',
+  				deep: '#5a2bbb'
+  			},
+  			ice: {
+  				DEFAULT: '#7cc7ff',
+  				soft: '#a6d8ff'
+  			},
+  			ember: '#ffb570',
+  			hairline: 'rgba(167, 139, 250, 0.16)',
+  			ink: {
+  				DEFAULT: '#eceafd',
+  				dim: '#a6a7c4',
+  				faint: '#6b6d8c'
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
