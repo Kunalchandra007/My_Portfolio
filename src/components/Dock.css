@@ -37,7 +37,19 @@
 .dock-item:hover,
 .dock-item:focus-visible {
   background: rgba(139, 92, 246, 0.18);
-  color: #7cc7ff;
+  color: #c084fc;
+}
+
+.dock-item-active {
+  color: #e9d5ff;
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.68), rgba(76, 29, 149, 0.58));
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.32), inset 0 1px 0 rgba(233, 213, 255, 0.18);
+}
+
+.dock-item-active:hover,
+.dock-item-active:focus-visible {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.8), rgba(91, 33, 182, 0.68));
 }
 
 .dock-icon {

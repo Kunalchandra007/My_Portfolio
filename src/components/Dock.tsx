@@ -26,6 +26,7 @@ export type DockProps = {
   dockHeight?: number;
   magnification?: number;
   spring?: SpringOptions;
+  activeIndex?: number;
 };
 
 type DockItemProps = {
@@ -133,6 +134,7 @@ export default function Dock({
   items,
   className = '',
   spring = { mass: 0.12, stiffness: 170, damping: 16 },
+  activeIndex,
   magnification = 62,
   distance = 180,
   panelHeight = 56,
@@ -158,7 +160,7 @@ export default function Dock({
           <DockItem
             key={index}
             onClick={item.onClick}
-            className={item.className}
+            className={`${item.className ?? ''} ${index === activeIndex ? 'dock-item-active' : ''}`}
             mouseX={mouseX}
             spring={spring}
             distance={distance}

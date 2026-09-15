@@ -90,7 +90,10 @@ function AutoScrollRow<T>({
       window.addEventListener('resize', updateMeasurements);
     }
 
-    frameId = window.requestAnimationFrame(step);
+    // Do not keep a 60fps loop alive for rows the visitor cannot see.
+    if (isInView && !isPaused) {
+      frameId = window.requestAnimationFrame(step);
+    }
 
     return () => {
       window.cancelAnimationFrame(frameId);

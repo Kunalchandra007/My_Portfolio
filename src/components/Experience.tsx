@@ -71,7 +71,7 @@ const Experience = () => (
               <div className="relative">
                 {/* Waypoint node */}
                 <div className="absolute -left-8 sm:-left-12 top-6 flex items-center justify-center">
-                  <span className="h-3.5 w-3.5 rounded-full bg-ice shadow-[0_0_14px_rgba(124,199,255,0.9)] ring-4 ring-void" />
+                  <span className="h-3.5 w-3.5 rounded-full bg-ice shadow-[0_0_14px_rgba(192,132,252,0.9)] ring-4 ring-void" />
                 </div>
 
                 <div className="panel panel-hover p-6 sm:p-8">

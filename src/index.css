@@ -12,36 +12,36 @@ html {
 @layer base {
   :root {
     /* Space surfaces */
-    --void: 5 6 10;              /* #05060a */
-    --surface: 11 13 22;         /* #0b0d16 */
-    --surface-2: 18 20 32;       /* #121420 */
+    --void: 10 6 18;             /* #0a0612 */
+    --surface: 20 12 32;         /* #140c20 */
+    --surface-2: 31 20 47;       /* #1f142f */
 
     /* Nebula accent system */
     --nebula: 139 92 246;        /* #8b5cf6 */
     --nebula-soft: 167 139 250;  /* #a78bfa */
     --nebula-deep: 90 43 187;    /* #5a2bbb */
-    --ice: 124 199 255;          /* #7cc7ff */
-    --ice-soft: 166 216 255;     /* #a6d8ff */
+    --ice: 192 132 252;          /* #c084fc — orchid accent */
+    --ice-soft: 233 213 255;     /* #e9d5ff — lavender highlight */
     --ember: 255 181 112;        /* #ffb570 */
 
     /* Ink / text */
-    --ink: 236 234 253;          /* #eceafd */
-    --ink-dim: 166 167 196;      /* #a6a7c4 */
-    --ink-faint: 107 109 140;    /* #6b6d8c */
+    --ink: 245 240 255;          /* #f5f0ff */
+    --ink-dim: 190 181 211;      /* #beb5d3 */
+    --ink-faint: 137 124 164;    /* #897ca4 */
     --hairline: 167 139 250;     /* used with low alpha */
 
     /* shadcn token bridge — mapped onto the nebula palette (dark-only) */
-    --background: 230 33% 4%;
+    --background: 270 40% 5%;
     --foreground: 252 62% 96%;
-    --card: 230 27% 7%;
+    --card: 276 31% 9%;
     --card-foreground: 252 62% 96%;
-    --popover: 230 27% 7%;
+    --popover: 276 31% 9%;
     --popover-foreground: 252 62% 96%;
     --primary: 258 90% 66%;
     --primary-foreground: 252 62% 96%;
-    --secondary: 230 22% 13%;
+    --secondary: 273 25% 14%;
     --secondary-foreground: 252 62% 96%;
-    --muted: 230 22% 13%;
+    --muted: 273 25% 14%;
     --muted-foreground: 240 15% 71%;
     --accent: 258 90% 66%;
     --accent-foreground: 252 62% 96%;
@@ -51,10 +51,10 @@ html {
     --input: 258 40% 20%;
     --ring: 258 90% 66%;
     --chart-1: 258 90% 66%;
-    --chart-2: 205 100% 74%;
+    --chart-2: 282 86% 74%;
     --chart-3: 27 100% 72%;
     --chart-4: 262 52% 47%;
-    --chart-5: 205 100% 84%;
+    --chart-5: 282 100% 88%;
     --radius: 0.75rem;
   }
 }
@@ -78,7 +78,7 @@ html {
     border-radius: 1rem;
     border: 1px solid rgba(167, 139, 250, 0.16);
     background:
-      linear-gradient(180deg, rgba(18, 20, 32, 0.72), rgba(11, 13, 22, 0.72));
+      linear-gradient(180deg, rgba(31, 20, 47, 0.78), rgba(20, 12, 32, 0.78));
     backdrop-filter: blur(10px);
     box-shadow:
       inset 0 1px 0 rgba(236, 234, 253, 0.04),
@@ -105,10 +105,16 @@ html {
 
   /* Cosmic gradient text helper */
   .text-cosmic {
-    background: linear-gradient(100deg, #a78bfa 0%, #7cc7ff 55%, #a6d8ff 100%);
+    background: linear-gradient(100deg, #a78bfa 0%, #c084fc 55%, #e9d5ff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Roomier display rhythm: clearer hierarchy without changing the layout. */
+  .font-serif {
+    letter-spacing: 0.018em;
+    line-height: 1.14;
   }
 }
 
@@ -225,7 +231,7 @@ html {
   flex: 0 0 auto;
   border-radius: 1rem;
   border: 1px solid rgba(167, 139, 250, 0.16);
-  background: linear-gradient(180deg, rgba(18, 20, 32, 0.78), rgba(11, 13, 22, 0.78));
+  background: linear-gradient(180deg, rgba(31, 20, 47, 0.8), rgba(20, 12, 32, 0.8));
   backdrop-filter: blur(10px);
   text-decoration: none;
   box-shadow: inset 0 1px 0 rgba(236, 234, 253, 0.04);
@@ -242,7 +248,7 @@ html {
 }
 
 .certificate-card:hover {
-  box-shadow: 0 24px 60px -28px rgba(124, 199, 255, 0.5);
+  box-shadow: 0 24px 60px -28px rgba(192, 132, 252, 0.5);
 }
 
 .marquee-row {
@@ -285,13 +291,15 @@ html {
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(120% 90% at 50% -10%, #090a13 0%, #06070d 45%, #050609 100%);
+    radial-gradient(75% 85% at 74% 10%, rgba(94, 43, 169, 0.2) 0%, transparent 58%),
+    radial-gradient(65% 75% at 17% 84%, rgba(67, 25, 126, 0.14) 0%, transparent 62%),
+    linear-gradient(135deg, #05030a 0%, #090510 48%, #10071d 100%);
 }
 
 .nebula-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(110px);
+  filter: blur(72px);
   will-change: transform, opacity;
 }
 
@@ -300,8 +308,7 @@ html {
   height: 55vw;
   left: -12vw;
   top: -10vh;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.13), transparent 70%);
-  animation: nebula-drift-1 30s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(151, 78, 255, 0.19), transparent 70%);
 }
 
 .nebula-2 {
@@ -309,8 +316,7 @@ html {
   height: 48vw;
   right: -14vw;
   top: 30vh;
-  background: radial-gradient(circle, rgba(124, 199, 255, 0.07), transparent 70%);
-  animation: nebula-drift-2 38s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(192, 132, 252, 0.14), transparent 70%);
 }
 
 .nebula-3 {
@@ -319,7 +325,6 @@ html {
   left: 28vw;
   bottom: -16vh;
   background: radial-gradient(circle, rgba(90, 43, 187, 0.12), transparent 70%);
-  animation: nebula-drift-3 44s ease-in-out infinite;
 }
 
 @keyframes nebula-drift-1 {
@@ -344,8 +349,7 @@ html {
   position: absolute;
   border-radius: 50%;
   background: #eceafd;
-  animation: star-twinkle var(--dur, 4s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
+  opacity: var(--max, 0.7);
 }
 
 @keyframes star-twinkle {
@@ -358,6 +362,7 @@ html {
   inset: 0;
   background: radial-gradient(circle at 50% 42%, transparent 38%, rgba(5, 6, 10, 0.82) 100%);
 }
+
 
 /* ============================================================
    TECH-NAME MARQUEE BAND — big scrolling outline/solid words
@@ -439,7 +444,7 @@ html {
    ============================================================ */
 .pl-arc {
   border: 1.5px solid rgba(167, 139, 250, 0.18);
-  border-top-color: #7cc7ff;
+  border-top-color: #c084fc;
   border-right-color: #a78bfa;
   border-radius: 50%;
   animation: pl-spin 1.15s cubic-bezier(0.5, 0.15, 0.4, 0.85) infinite;
@@ -458,12 +463,12 @@ html {
 
 @keyframes pl-pulse {
   0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(139, 92, 246, 0.45); }
-  50% { transform: scale(1.06); box-shadow: 0 0 56px rgba(124, 199, 255, 0.55); }
+  50% { transform: scale(1.06); box-shadow: 0 0 56px rgba(192, 132, 252, 0.55); }
 }
 
 .pl-bar-fill {
-  background: linear-gradient(90deg, #8b5cf6, #7cc7ff);
-  box-shadow: 0 0 14px rgba(124, 199, 255, 0.6);
+  background: linear-gradient(90deg, #8b5cf6, #c084fc);
+  box-shadow: 0 0 14px rgba(192, 132, 252, 0.6);
   transition: width 0.15s linear;
 }
 

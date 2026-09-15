@@ -15,10 +15,10 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			void: '#05060a',
+			void: '#0a0612',
   			surface: {
-  				DEFAULT: '#0b0d16',
-  				2: '#12142099'
+				DEFAULT: '#140c20',
+				2: '#1f142f99'
   			},
   			nebula: {
   				DEFAULT: '#8b5cf6',
@@ -26,8 +26,8 @@ export default {
   				deep: '#5a2bbb'
   			},
   			ice: {
-  				DEFAULT: '#7cc7ff',
-  				soft: '#a6d8ff'
+				DEFAULT: '#c084fc',
+				soft: '#e9d5ff'
   			},
   			ember: '#ffb570',
   			hairline: 'rgba(167, 139, 250, 0.16)',

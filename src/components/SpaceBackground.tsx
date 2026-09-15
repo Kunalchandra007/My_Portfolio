@@ -22,7 +22,8 @@ const SpaceBackground = () => {
       const x = Math.sin(seed * 999.13) * 10000;
       return x - Math.floor(x);
     };
-    const count = 140;
+    // A restrained field keeps the fixed background inexpensive during scroll.
+    const count = 64;
     return Array.from({ length: count }, (_, i) => {
       const s = rng(i + 1);
       const s2 = rng(i + 51);

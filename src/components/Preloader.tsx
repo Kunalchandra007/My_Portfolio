@@ -97,7 +97,7 @@ const Preloader: React.FC<Props> = ({ onFinish }) => {
           {/* Orbiting satellite */}
           {!reducedMotion && (
             <div className="absolute inset-0 animate-[pl-spin_2.4s_linear_infinite]">
-              <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ice shadow-[0_0_10px_rgba(124,199,255,0.9)]" />
+              <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ice shadow-[0_0_10px_rgba(192,132,252,0.9)]" />
             </div>
           )}
         </div>

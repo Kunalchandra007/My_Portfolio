@@ -77,6 +77,21 @@ const LightPillar: React.FC<LightPillarProps> = ({
     } as const;
 
     const settings = qualitySettings[effectiveQuality] || qualitySettings.medium;
+    let isOnScreen = true;
+    let isDocumentVisible = !document.hidden;
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isOnScreen = entry.isIntersecting;
+      },
+      { threshold: 0.01 }
+    );
+    visibilityObserver.observe(container);
+
+    const handleVisibilityChange = () => {
+      isDocumentVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     const scene = new THREE.Scene();
     sceneRef.current = scene;
@@ -259,7 +274,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
       if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
 
       const deltaTime = currentTime - lastTime;
-      if (deltaTime >= frameTime) {
+      if (isOnScreen && isDocumentVisible && deltaTime >= frameTime) {
         timeRef.current += 0.016 * rotationSpeed;
         const t = timeRef.current;
         materialRef.current.uniforms.uTime.value = t;
@@ -290,6 +305,8 @@ const LightPillar: React.FC<LightPillarProps> = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      visibilityObserver.disconnect();
       if (interactive) container.removeEventListener('mousemove', handleMouseMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (rendererRef.current) {

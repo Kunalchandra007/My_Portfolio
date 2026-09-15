@@ -68,7 +68,7 @@ const SectionHeader = ({
 
       <motion.h2
         variants={item}
-        className="mt-4 font-serif text-4xl leading-[1.05] text-ink sm:text-5xl md:text-6xl"
+        className="mt-5 font-serif text-4xl leading-[1.16] tracking-[0.022em] text-ink sm:text-5xl md:text-6xl"
       >
         {title}
       </motion.h2>
@@ -76,7 +76,7 @@ const SectionHeader = ({
       {subtitle && (
         <motion.p
           variants={item}
-          className="mt-4 max-w-2xl text-base leading-relaxed text-ink-dim sm:text-lg"
+          className="mt-5 max-w-2xl text-base leading-8 tracking-[0.012em] text-ink-dim sm:text-lg"
         >
           {subtitle}
         </motion.p>

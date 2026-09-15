@@ -17,6 +17,7 @@ import { navigateTo } from '../lib/navigation';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeHref, setActiveHref] = useState('home');
 
   useEffect(() => {
     let rafId = 0;
@@ -24,6 +25,15 @@ const Header = () => {
       if (rafId) return;
       rafId = window.requestAnimationFrame(() => {
         setScrolled(window.scrollY > 50);
+        const sections = navItems
+          .map((item) => ({ href: item.href, element: document.getElementById(item.href) }))
+          .filter((item): item is { href: string; element: HTMLElement } => item.element !== null);
+        const current = sections.reduce((closest, section) =>
+          Math.abs(section.element.getBoundingClientRect().top - 150) < Math.abs(closest.element.getBoundingClientRect().top - 150)
+            ? section
+            : closest
+        );
+        if (current) setActiveHref(current.href);
         rafId = 0;
       });
     };
@@ -48,6 +58,7 @@ const Header = () => {
   ];
 
   const goToPage = (href: string) => {
+    setActiveHref(href);
     navigateTo(href);
     setIsMenuOpen(false);
   };
@@ -63,7 +74,7 @@ const Header = () => {
           <div className="relative flex items-center justify-between py-4">
             <button
               onClick={() => goToPage('home')}
-              className="font-serif text-2xl text-cosmic"
+              className="font-serif text-2xl tracking-[0.03em] text-cosmic"
             >
               Kunal Chandra
             </button>
@@ -114,6 +125,7 @@ const Header = () => {
           magnification={74}
           distance={170}
           dockHeight={120}
+          activeIndex={navItems.findIndex((item) => item.href === activeHref)}
         />
       </nav>
     </>

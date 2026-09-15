@@ -21,12 +21,12 @@ const Hero = () => {
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden"
     >
-      {/* Earlier cinematic light-beam — retuned to the nebula palette, sits behind content */}
+      {/* The shader renderer creates the organic aurora shown in the reference. */}
       {!reduceMotion && (
         <div className="pointer-events-none absolute inset-0 z-[1] opacity-50">
           <LightPillar
-            topColor="#8b5cf6"
-            bottomColor="#5f8fd6"
+            topColor="#7c3aed"
+            bottomColor="#2e1065"
             intensity={0.7}
             rotationSpeed={0.22}
             glowAmount={0.005}
@@ -43,7 +43,7 @@ const Hero = () => {
       {/* Subtle cinematic glow layered over the beam */}
       <div className="pointer-events-none absolute inset-0 z-[1]">
         <div className="absolute left-1/2 top-1/3 h-[50vh] w-[50vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.12),transparent_65%)] blur-3xl" />
-        <div className="absolute bottom-0 right-[12%] h-[32vh] w-[32vh] rounded-full bg-[radial-gradient(circle,rgba(124,199,255,0.08),transparent_68%)] blur-3xl" />
+        <div className="absolute bottom-0 right-[12%] h-[32vh] w-[32vh] rounded-full bg-[radial-gradient(circle,rgba(192,132,252,0.1),transparent_68%)] blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -52,7 +52,7 @@ const Hero = () => {
           <div className="text-left">
             <motion.h1
               {...rise(0)}
-              className="font-serif text-6xl leading-[1.06] text-ink sm:text-7xl lg:text-[6.5rem] lg:leading-[1.04]"
+              className="font-serif text-6xl leading-[1.15] tracking-[0.025em] text-ink sm:text-7xl lg:text-[6.5rem] lg:leading-[1.12]"
             >
               Kunal
               <br />
@@ -61,9 +61,9 @@ const Hero = () => {
 
             <motion.div
               {...rise(0.18)}
-              className="mt-6 flex items-center gap-3 font-mono text-lg text-ink-dim sm:text-xl"
+              className="mt-8 flex items-center gap-3 font-mono text-lg tracking-[0.025em] text-ink-dim sm:text-xl"
             >
-              <span className="h-2 w-2 rounded-full bg-ice shadow-[0_0_12px_rgba(124,199,255,0.9)]" />
+              <span className="h-2 w-2 rounded-full bg-ice shadow-[0_0_12px_rgba(192,132,252,0.9)]" />
               <TypeAnimation
                 sequence={[
                   'Data Science Enthusiast',
@@ -77,14 +77,14 @@ const Hero = () => {
                 ]}
                 wrapper="span"
                 speed={50}
-                style={{ display: 'inline-block', color: '#a6d8ff', fontWeight: 400 }}
+                style={{ display: 'inline-block', color: '#e9d5ff', fontWeight: 400 }}
                 repeat={Infinity}
               />
             </motion.div>
 
             <motion.p
               {...rise(0.26)}
-              className="mt-6 max-w-xl text-base leading-relaxed text-ink-dim sm:text-lg"
+              className="mt-7 max-w-xl text-base leading-8 tracking-[0.012em] text-ink-dim sm:text-lg"
             >
               Charting a course through data science and machine learning — building
               intelligent systems, one expedition at a time.
@@ -208,7 +208,7 @@ const Hero = () => {
                 transition={{ duration: 46, repeat: Infinity, ease: 'linear' }}
               >
                 <span
-                  className="absolute left-1/2 top-0 h-3 w-3 rounded-full bg-ice shadow-[0_0_18px_rgba(124,199,255,0.95)]"
+                  className="absolute left-1/2 top-0 h-3 w-3 rounded-full bg-ice shadow-[0_0_18px_rgba(192,132,252,0.95)]"
                   style={{ transform: 'translate(-50%, -50%) rotateX(-62deg)' }}
                 />
               </motion.div>
