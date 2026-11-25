@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="KC">
+  <defs>
+    <linearGradient id="kc-paper" x1="6" y1="2" x2="58" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFCF8"/>
+      <stop offset="0.55" stop-color="#F7F1E6"/>
+      <stop offset="1" stop-color="#F0E2CE"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#kc-paper)"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.4" fill="none" stroke="#2A1810" stroke-opacity="0.16"/>
+  <text
+    x="32"
+    y="42"
+    text-anchor="middle"
+    fill="#2A1810"
+    font-family="Georgia, 'Iowan Old Style', Palatino, 'Palatino Linotype', 'Times New Roman', serif"
+    font-size="26"
+    letter-spacing="-0.8"
+  >KC</text>
+</svg>

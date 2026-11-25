@@ -38,7 +38,13 @@ export const metadata: Metadata = {
   authors: [{ name: 'Kunal Chandra' }],
   robots: { index: true, follow: true },
   alternates: { canonical: '/' },
-  icons: { icon: '/logo.jpg' },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', type: 'image/png', sizes: '32x32' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
   openGraph: {
     title: 'Kunal Chandra | Software Engineer',
     description:
@@ -46,14 +52,14 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://kunalchandra.dev/',
     siteName: 'Kunal Chandra',
-    images: ['https://kunalchandra.dev/mewithtiecropped.jpg'],
+    images: ['https://kunalchandra.dev/forlighttheme.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Kunal Chandra | Software Engineer',
     description:
       'Portfolio of Kunal Chandra with projects, experience, skills, and resume focused on data science and machine learning.',
-    images: ['https://kunalchandra.dev/mewithtiecropped.jpg'],
+    images: ['https://kunalchandra.dev/forlighttheme.jpg'],
   },
 };
 
@@ -71,7 +77,7 @@ const jsonLd = {
       '@id': 'https://kunalchandra.dev/#person',
       name: 'Kunal Chandra',
       url: 'https://kunalchandra.dev/',
-      image: 'https://kunalchandra.dev/mewithtiecropped.jpg',
+      image: 'https://kunalchandra.dev/forlighttheme.jpg',
       jobTitle: 'Software Engineer',
       description:
         'Computer Science Engineering student at Haridwar University focused on data science, machine learning, DSA, and software development.',

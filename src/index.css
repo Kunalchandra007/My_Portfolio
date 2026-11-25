@@ -738,12 +738,9 @@ html.is-preloading .space-bg {
 }
 
 .theme-hint {
-  position: absolute;
-  right: calc(100% + 6px);
-  top: 50%;
+  position: static;
   display: flex;
-  translate: 0 -62%;
-  align-items: flex-end;
+  align-items: center;
   gap: 2px;
   color: rgb(var(--c-nebula));
   pointer-events: none;
@@ -755,6 +752,7 @@ html.is-preloading .space-bg {
   font-style: italic;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
+  transition: font-size 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dark .theme-hint {
@@ -829,19 +827,6 @@ html.is-preloading .space-bg {
 }
 
 @media (max-width: 980px) {
-  .header-bar {
-    flex-wrap: wrap;
-    row-gap: 0.15rem;
-  }
-  .theme-switch {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  .theme-hint {
-    position: static;
-    translate: none;
-    align-items: center;
-  }
   .theme-hint span { font-size: 1rem; }
   .theme-hint__arrow { width: 52px; height: 24px; }
   .story-sheet > section { padding-top: 6.75rem; }
@@ -1575,11 +1560,6 @@ html.is-preloading .space-bg {
   100% { opacity: 1; transform: perspective(1200px) rotateY(0deg) scale(1); }
 }
 
-.project-roll .pbanner {
-  height: 100%;
-  min-height: 32rem;
-}
-
 .project-roll__body {
   display: flex;
   flex-direction: column;
@@ -1653,10 +1633,6 @@ html.is-preloading .space-bg {
   .project-roll {
     grid-template-columns: 1fr;
     min-height: 0;
-  }
-  .project-roll .pbanner {
-    height: 18rem;
-    min-height: 18rem;
   }
   .project-nudge--next {
     justify-self: end;
@@ -1916,19 +1892,46 @@ html.is-preloading .space-bg {
   pointer-events: none;
 }
 
+.header-spacer {
+  flex: 1 1 auto;
+  min-width: 1.25rem;
+  transition:
+    flex-grow 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    min-width 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-name,
+.header-bar {
+  transition:
+    font-size 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    gap 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .site-header .header-inner {
   pointer-events: auto;
+  interpolate-size: allow-keywords;
+  width: min(80rem, calc(100% - 2rem));
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 999px;
   transition:
-    background-color 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease,
-    padding 0.35s ease,
-    margin 0.35s ease,
-    border-radius 0.35s ease;
+    width 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.75s ease,
+    padding 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    margin 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.75s ease;
+}
+
+.site-header.is-scrolled .header-spacer {
+  flex-grow: 0;
+  min-width: 1.15rem;
 }
 
 .site-header.is-scrolled .header-inner {
-  width: max-content;
+  width: fit-content;
   max-width: calc(100vw - 1.5rem);
   margin: 0.7rem auto 0;
   /* Side padding clears the pill's curved caps so the name and toggle stay whole. */
@@ -1953,12 +1956,6 @@ html.is-preloading .space-bg {
   font-size: 1.2rem;
   white-space: nowrap;
   line-height: 1;
-}
-
-.site-header.is-scrolled .theme-hint {
-  position: static;
-  translate: none;
-  align-items: center;
 }
 
 .site-header.is-scrolled .theme-hint span {
@@ -2017,18 +2014,6 @@ html.is-preloading .space-bg {
   .planet,
   .moon-orbit,
   .rocket,
-  .pbanner__photo,
-  .pbanner__sheen,
-  .pbanner__sky,
-  .pbanner__blink,
-  .pbanner__wave,
-  .pbanner__car,
-  .pbanner__heat,
-  .pbanner__ring,
-  .pbanner__pulse,
-  .pbanner__spin,
-  .pbanner__coin,
-  .pbanner__fall,
   .theme-hint__arrow,
   .tm-row-a .tm-track,
   .tm-row-b .tm-track,
@@ -2036,104 +2021,4 @@ html.is-preloading .space-bg {
     animation: none !important;
   }
   .rocket { opacity: 0.85; }
-}
-
-/* ---------- Project banners ---------- */
-.pbanner {
-  position: relative;
-  height: 9.25rem;
-  overflow: hidden;
-  flex: 0 0 auto;
-  background: #111;
-}
-
-.pbanner__photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.04);
-  animation: pbanner-ken 16s ease-in-out infinite alternate;
-}
-
-@keyframes portrait-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes pbanner-ken {
-  from { transform: scale(1.02) translate3d(0, 0, 0); }
-  to { transform: scale(1.1) translate3d(-2%, -1%, 0); }
-}
-
-.pbanner__sky {
-  position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(42% 70% at 12% 90%, var(--b), transparent 70%),
-    radial-gradient(48% 80% at 92% 0%, var(--a), transparent 62%),
-    linear-gradient(160deg, var(--c), #050505 70%);
-  animation: pbanner-drift 8s ease-in-out infinite;
-}
-
-.pbanner__art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.pbanner__sheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.22), transparent 68%);
-  transform: translateX(-130%);
-  animation: pbanner-sheen 4.2s ease-in-out infinite;
-}
-
-.pbanner__blink { animation: pbanner-blink 1.8s ease-in-out infinite; }
-.pbanner__blink--b { animation-delay: 0.4s; }
-.pbanner__blink--c { animation-delay: 0.8s; }
-.pbanner__wave { animation: pbanner-wave 3.2s ease-in-out infinite; }
-.pbanner__wave--b { animation-delay: 0.4s; }
-.pbanner__car { animation: pbanner-car 3.6s linear infinite; }
-.pbanner__heat { animation: pbanner-heat 2.4s ease-in-out infinite; transform-origin: center; }
-.pbanner__heat--b { animation-delay: 0.5s; }
-.pbanner__ring { animation: pbanner-ring 2.8s ease-out infinite; transform-origin: 180px 70px; }
-.pbanner__ring--b { animation-delay: 0.8s; }
-.pbanner__pulse { animation: pbanner-blink 1.4s ease-in-out infinite; }
-.pbanner__spin { transform-origin: 180px 70px; animation: orbit-spin 4s linear infinite; }
-.pbanner__coin { animation: pbanner-coin 2.6s ease-in-out infinite; }
-.pbanner__fall { animation: pbanner-fall 2.2s ease-in infinite; transform-origin: center; }
-
-@keyframes pbanner-drift {
-  50% { transform: translate3d(-2%, -3%, 0) scale(1.05); }
-}
-@keyframes pbanner-sheen {
-  0%, 48% { transform: translateX(-130%); }
-  100% { transform: translateX(130%); }
-}
-@keyframes pbanner-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
-}
-@keyframes pbanner-wave {
-  50% { transform: translateX(-18px); }
-}
-@keyframes pbanner-car {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(70px); }
-}
-@keyframes pbanner-heat {
-  50% { transform: scale(1.15); opacity: 0.7; }
-}
-@keyframes pbanner-ring {
-  0% { transform: scale(0.7); opacity: 0.9; }
-  100% { transform: scale(1.35); opacity: 0; }
-}
-@keyframes pbanner-coin {
-  50% { transform: translateX(-28px); }
-}
-@keyframes pbanner-fall {
-  0%, 70% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(18px); opacity: 0.2; }
 }

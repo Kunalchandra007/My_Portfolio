@@ -71,15 +71,16 @@ const Header = () => {
     <>
       <header className={`site-header fixed top-0 left-0 right-0 z-50${scrolled ? ' is-scrolled' : ''}`}>
         <div className="header-inner mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="header-bar relative flex items-center justify-between py-3">
+          <div className="header-bar relative flex items-center py-3">
             <button
               onClick={() => goToPage('home')}
               className="brand-name font-serif text-2xl text-ink"
             >
               Kunal <span className="text-cosmic">Chandra</span>
             </button>
+            <div className="header-spacer" aria-hidden />
 
-            <div className="ml-auto flex items-center gap-3 md:mr-0">
+            <div className="header-tools flex items-center gap-3">
               <ThemeSwitch />
               <SiteViews />
               <div className="md:hidden relative z-20">
