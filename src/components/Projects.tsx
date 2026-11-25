@@ -4,6 +4,7 @@ import { ExternalLink, Github } from 'lucide-react';
 import SectionHeader from './story/SectionHeader';
 import Reveal from './story/Reveal';
 import CoverFlow, { drawCoverArt, type CoverFlowArt } from './ui/cover-flow';
+import { bindScrollFrame, refreshScrollFrame } from '../lib/scrollFrame';
 
 function RollArrow({ flip = false }: { flip?: boolean }) {
   return (
@@ -157,16 +158,22 @@ const Projects = () => {
       runway.style.height = `${runwayHeight()}px`;
     };
 
-    const sync = () => {
-      if (released()) {
+    let exact = 0;
+    let resting = false;
+    const read = () => {
+      resting = released();
+      if (resting) return;
+      const travel = span();
+      const scrolled = Math.max(0, -runway.getBoundingClientRect().top);
+      exact = travel <= 0 ? 0 : Math.min(projects.length - 1, (scrolled / travel) * (projects.length - 1));
+    };
+    const write = () => {
+      if (resting) {
         drive.current.value = null;
         return;
       }
       const want = `${runwayHeight()}px`;
       if (runway.style.height !== want) runway.style.height = want;
-      const travel = span();
-      const scrolled = Math.max(0, -runway.getBoundingClientRect().top);
-      const exact = travel <= 0 ? 0 : Math.min(projects.length - 1, (scrolled / travel) * (projects.length - 1));
       drive.current.value = exact;
       drive.current.kick();
       const next = Math.round(exact);
@@ -177,18 +184,21 @@ const Projects = () => {
     };
 
     measure();
-    sync();
-    window.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', measure);
-    window.visualViewport?.addEventListener('resize', measure);
-    narrow.addEventListener('change', measure);
-    reduce.addEventListener('change', measure);
+    const unbind = bindScrollFrame(read, write);
+    const onResize = () => {
+      measure();
+      refreshScrollFrame();
+    };
+    window.addEventListener('resize', onResize);
+    window.visualViewport?.addEventListener('resize', onResize);
+    narrow.addEventListener('change', onResize);
+    reduce.addEventListener('change', onResize);
     return () => {
-      window.removeEventListener('scroll', sync);
-      window.removeEventListener('resize', measure);
-      window.visualViewport?.removeEventListener('resize', measure);
-      narrow.removeEventListener('change', measure);
-      reduce.removeEventListener('change', measure);
+      unbind();
+      window.removeEventListener('resize', onResize);
+      window.visualViewport?.removeEventListener('resize', onResize);
+      narrow.removeEventListener('change', onResize);
+      reduce.removeEventListener('change', onResize);
       runway.style.height = '';
     };
   }, []);

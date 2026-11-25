@@ -15,6 +15,7 @@ import Dock from './Dock';
 import ThemeSwitch from './ThemeSwitch';
 import SiteViews from './SiteViews';
 import { navigateTo } from '../lib/navigation';
+import { bindScrollFrame } from '../lib/scrollFrame';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,11 +23,11 @@ const Header = () => {
   const [activeHref, setActiveHref] = useState('home');
 
   useEffect(() => {
-    let rafId = 0;
-    const handleScroll = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 50);
+    let nextScrolled = false;
+    let nextHref = 'home';
+    return bindScrollFrame(
+      () => {
+        nextScrolled = window.scrollY > 50;
         const sections = navItems
           .map((item) => ({ href: item.href, element: document.getElementById(item.href) }))
           .filter((item): item is { href: string; element: HTMLElement } => item.element !== null);
@@ -37,17 +38,13 @@ const Header = () => {
           const box = chapter.getBoundingClientRect();
           if (box.top <= mark && box.bottom > mark) current = section.href;
         });
-        setActiveHref(current);
-        rafId = 0;
-      });
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId) window.cancelAnimationFrame(rafId);
-    };
+        nextHref = current;
+      },
+      () => {
+        setScrolled(nextScrolled);
+        setActiveHref(nextHref);
+      },
+    );
   }, []);
 
   const navItems = [

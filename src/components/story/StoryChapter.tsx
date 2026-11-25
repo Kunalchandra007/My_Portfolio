@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { bindScrollFrame, refreshScrollFrame } from '../../lib/scrollFrame';
 
 type StoryChapterProps = {
   z: number;
@@ -41,7 +42,8 @@ const StoryChapter = ({ z, pin = false, children }: StoryChapterProps) => {
       runwayEl.style.height = `${content + view}px`;
     };
 
-    const sync = () => {
+    let nextTy = '0.00';
+    const read = () => {
       if (released()) return;
       const view = window.innerHeight;
       let ty = 0;
@@ -50,27 +52,32 @@ const StoryChapter = ({ z, pin = false, children }: StoryChapterProps) => {
         const scrolled = Math.max(0, -runwayEl.getBoundingClientRect().top);
         ty = -Math.min(extra, scrolled);
       }
-      sheetEl.style.transform = `translate3d(0, ${ty.toFixed(2)}px, 0)`;
+      nextTy = ty.toFixed(2);
+    };
+    const write = () => {
+      if (released()) return;
+      if (sheetEl.dataset.ty === nextTy) return;
+      sheetEl.dataset.ty = nextTy;
+      sheetEl.style.transform = `translate3d(0, ${nextTy}px, 0)`;
     };
 
     measure();
-    sync();
-    const onScroll = () => sync();
+    const unbind = bindScrollFrame(read, write);
     const onResize = () => {
       measure();
-      sync();
+      refreshScrollFrame();
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
     narrow.addEventListener('change', onResize);
     const observer = new ResizeObserver(onResize);
     observer.observe(sheetEl);
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      unbind();
       window.removeEventListener('resize', onResize);
       narrow.removeEventListener('change', onResize);
       observer.disconnect();
       if (!pin) runwayEl.style.height = '';
+      delete sheetEl.dataset.ty;
       sheetEl.style.transform = '';
       frameEl.style.transform = '';
     };

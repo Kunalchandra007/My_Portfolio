@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 html {
-  scroll-behavior: smooth;
+  /* Wheel and trackpad stay 1:1. Button jumps still pass behavior: 'smooth'. */
+  scroll-behavior: auto;
 }
 
 /* Light is the default. .dark is the observatory. */
@@ -537,6 +538,7 @@ html.is-preloading .space-bg {
   position: relative;
   z-index: 1;
   min-height: 100%;
+  will-change: transform;
 }
 
 /* The next chapter is pulled up by one screen so it can slide over the one
