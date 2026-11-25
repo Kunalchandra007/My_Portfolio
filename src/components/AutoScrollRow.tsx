@@ -83,12 +83,8 @@ function AutoScrollRow<T>({
       frameId = window.requestAnimationFrame(step);
     };
 
-    if ('ResizeObserver' in window) {
-      resizeObserver = new ResizeObserver(updateMeasurements);
-      resizeObserver.observe(track);
-    } else {
-      window.addEventListener('resize', updateMeasurements);
-    }
+    resizeObserver = new ResizeObserver(updateMeasurements);
+    resizeObserver.observe(track);
 
     // Do not keep a 60fps loop alive for rows the visitor cannot see.
     if (isInView && !isPaused) {
@@ -97,11 +93,7 @@ function AutoScrollRow<T>({
 
     return () => {
       window.cancelAnimationFrame(frameId);
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      } else {
-        window.removeEventListener('resize', updateMeasurements);
-      }
+      resizeObserver?.disconnect();
     };
   }, [direction, isPaused, isInView, items.length, speedPxPerSecond]);
 

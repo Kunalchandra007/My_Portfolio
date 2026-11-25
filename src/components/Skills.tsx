@@ -1,37 +1,33 @@
-import { Code, Database, Brain, Wrench } from 'lucide-react';
+import { Code, Database, Brain, Wrench, Server } from 'lucide-react';
 import SectionHeader from './story/SectionHeader';
 import Reveal from './story/Reveal';
+import TechMarquee from './TechMarquee';
 
 const skillCategories = [
   {
-    icon: <Code className="w-5 h-5 text-ice" />,
-    title: 'Languages',
-    skills: ['Python', 'Java', 'C', 'JavaScript', 'HTML', 'CSS'],
+    icon: <Code className="w-5 h-5 text-nebula" />,
+    title: 'Programming Languages',
+    skills: ['Python', 'Java', 'JavaScript', 'C', 'SQL'],
   },
   {
-    icon: <Wrench className="w-5 h-5 text-ice" />,
-    title: 'Developer Tools',
-    skills: ['Jupyter Notebook', 'VS Code', 'GitHub', 'Anaconda', 'Google Colab'],
+    icon: <Server className="w-5 h-5 text-nebula" />,
+    title: 'Backend & APIs',
+    skills: ['FastAPI', 'REST APIs', 'JWT Authentication', 'Pydantic', 'Docker', 'Kubernetes', 'CI/CD (GitHub Actions)'],
   },
   {
-    icon: <Brain className="w-5 h-5 text-ice" />,
-    title: 'Frameworks & Libraries',
-    skills: ['Scikit-learn', 'TensorFlow', 'Keras', 'PyTorch', 'ReactJS', 'Node.js', 'Express.js'],
+    icon: <Brain className="w-5 h-5 text-nebula" />,
+    title: 'Generative AI & LLMs',
+    skills: ['LangChain', 'LlamaIndex', 'Hugging Face Transformers', 'RAG', 'ChromaDB'],
   },
   {
-    icon: <Database className="w-5 h-5 text-ice" />,
-    title: 'Technologies',
-    skills: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'OpenCV', 'NLTK'],
+    icon: <Wrench className="w-5 h-5 text-nebula" />,
+    title: 'ML/Data',
+    skills: ['PyTorch', 'TensorFlow/Keras', 'Scikit-learn', 'Pandas', 'NumPy'],
   },
   {
-    icon: <Database className="w-5 h-5 text-ice" />,
-    title: 'Databases',
-    skills: ['MongoDB', 'MySQL', 'SQL'],
-  },
-  {
-    icon: <Wrench className="w-5 h-5 text-ice" />,
-    title: 'Other Tools',
-    skills: ['Flask', 'Streamlit', 'Docker', 'Git', 'Bootstrap', 'REST APIs'],
+    icon: <Database className="w-5 h-5 text-nebula" />,
+    title: 'Databases & Dev Tools',
+    skills: ['PostgreSQL', 'MongoDB', 'MySQL', 'Redis', 'Git', 'GitHub', 'Linux'],
   },
 ];
 
@@ -39,13 +35,13 @@ const Skills = () => (
   <section id="skills" className="py-24 relative">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Reveal>
-        <SectionHeader index="03" label="Onboard Systems" title="Technical Skills" align="center" />
+        <SectionHeader title="Technical skills" align="center" />
       </Reveal>
 
-      <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {skillCategories.map((cat, i) => (
           <Reveal key={i} delay={i}>
-            <div className="panel panel-hover h-full p-6">
+            <div className="panel panel-hover h-full p-5">
               <div className="flex items-center gap-3 mb-5">
                 {cat.icon}
                 <h3 className="font-serif text-lg text-ink">{cat.title}</h3>
@@ -64,6 +60,7 @@ const Skills = () => (
           </Reveal>
         ))}
       </div>
+      <TechMarquee />
     </div>
   </section>
 );

@@ -1,13 +1,7 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import type { ReactNode } from 'react';
 
 type SectionHeaderProps = {
-  /** Chapter number, e.g. "02" */
-  index: string;
-  /** Telemetry label, e.g. "THE NAVIGATOR" */
-  label: string;
-  /** Optional coordinate/telemetry suffix, e.g. "20.59°N" */
-  coord?: string;
   /** Serif display title */
   title: ReactNode;
   /** Optional supporting line */
@@ -16,14 +10,7 @@ type SectionHeaderProps = {
   className?: string;
 };
 
-/**
- * Consistent "waypoint" header: Space Mono telemetry line + Instrument Serif title.
- * Used by every section for cohesive mission-log framing.
- */
 const SectionHeader = ({
-  index,
-  label,
-  coord,
   title,
   subtitle,
   align = 'center',
@@ -36,7 +23,7 @@ const SectionHeader = ({
     hidden: {},
     show: { transition: { staggerChildren: 0.08 } },
   };
-  const item = reduceMotion
+  const item: Variants = reduceMotion
     ? {}
     : {
         hidden: { opacity: 0, y: 16 },
@@ -51,24 +38,9 @@ const SectionHeader = ({
       viewport={{ once: true, margin: '0px 0px -15% 0px' }}
       className={`flex max-w-3xl flex-col ${alignCls} ${className}`}
     >
-      <motion.div
-        variants={item}
-        className={`flex items-center gap-3 ${align === 'center' ? 'justify-center' : ''}`}
-      >
-        <span className="telemetry text-nebula-soft">{index}</span>
-        <span className="h-px w-8 bg-hairline" />
-        <span className="telemetry">{label}</span>
-        {coord && (
-          <>
-            <span className="h-px w-8 bg-hairline hidden sm:block" />
-            <span className="telemetry text-ink-faint hidden sm:inline">{coord}</span>
-          </>
-        )}
-      </motion.div>
-
       <motion.h2
         variants={item}
-        className="mt-5 font-serif text-4xl leading-[1.16] tracking-[0.022em] text-ink sm:text-5xl md:text-6xl"
+        className="font-serif text-4xl text-ink sm:text-5xl"
       >
         {title}
       </motion.h2>

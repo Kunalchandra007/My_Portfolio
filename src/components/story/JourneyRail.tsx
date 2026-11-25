@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { navigateTo } from '../../lib/navigation';
+import { useTheme } from '../../contexts/ThemeContext';
 
 type Chapter = {
   id: string;
@@ -7,7 +8,18 @@ type Chapter = {
   label: string;
 };
 
-const CHAPTERS: Chapter[] = [
+const LIGHT: Chapter[] = [
+  { id: 'home', num: '01', label: 'Intro' },
+  { id: 'about', num: '02', label: 'Profile' },
+  { id: 'skills', num: '03', label: 'Skills' },
+  { id: 'experience', num: '04', label: 'Experience' },
+  { id: 'projects', num: '05', label: 'Work' },
+  { id: 'certificates', num: '06', label: 'Honors' },
+  { id: 'resume', num: '07', label: 'Resume' },
+  { id: 'contact', num: '08', label: 'Contact' },
+];
+
+const SPACE: Chapter[] = [
   { id: 'home', num: '01', label: 'Launch' },
   { id: 'about', num: '02', label: 'Navigator' },
   { id: 'skills', num: '03', label: 'Systems' },
@@ -23,25 +35,32 @@ const CHAPTERS: Chapter[] = [
  * Uses IntersectionObserver to highlight the active waypoint.
  */
 const JourneyRail = () => {
+  const { isDark } = useTheme();
+  const chapters = isDark ? SPACE : LIGHT;
   const [active, setActive] = useState('home');
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
-    );
-
-    CHAPTERS.forEach((c) => {
-      const el = document.getElementById(c.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+    let rafId = 0;
+    const update = () => {
+      let current = chapters[0]?.id ?? 'home';
+      chapters.forEach((chapter) => {
+        const el = document.getElementById(chapter.id);
+        if (el && el.getBoundingClientRect().top <= 96) current = chapter.id;
+      });
+      setActive(current);
+      rafId = 0;
+    };
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, [chapters]);
 
   return (
     <nav
@@ -49,7 +68,7 @@ const JourneyRail = () => {
       className="fixed right-6 top-1/2 z-30 hidden -translate-y-1/2 xl:block"
     >
       <ul className="flex flex-col gap-4">
-        {CHAPTERS.map((c) => {
+        {chapters.map((c) => {
           const isActive = active === c.id;
           return (
             <li key={c.id}>

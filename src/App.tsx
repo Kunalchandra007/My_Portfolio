@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import CertificatesPage from './components/CertificatesPage';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -10,16 +11,15 @@ import Resume from './components/Resume';
 import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
 import Preloader from './components/Preloader';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import SpaceBackground from './components/SpaceBackground';
-import TechMarquee from './components/TechMarquee';
-import JourneyRail from './components/story/JourneyRail';
+import StoryChapter from './components/story/StoryChapter';
 import { navigateTo } from './lib/navigation';
 
-function App() {
+function Shell() {
+  const { isDark } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
 
-  // Keep the browser from restoring a previous scroll position on reload.
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -28,39 +28,55 @@ function App() {
 
   useEffect(() => {
     if (isLoading) return;
-
     const target = window.location.hash || window.location.pathname;
     if (target && target !== '/' && target !== '') {
       window.requestAnimationFrame(() => navigateTo(target));
     } else {
-      // No deep-link → always land at the top after the preloader.
       window.scrollTo(0, 0);
     }
   }, [isLoading]);
 
   return (
-    <ThemeProvider>
+    <>
       {isLoading && <Preloader onFinish={() => setIsLoading(false)} />}
-      <div className="relative min-h-screen bg-void">
-        {/* Custom lightweight cosmic backdrop (fixed, behind everything) */}
-        <div className="pointer-events-none fixed inset-0 z-0">
+      <div className="relative min-h-screen bg-void text-ink">
+        {isDark ? (
           <SpaceBackground />
-        </div>
+        ) : (
+          <div className="atelier-bg pointer-events-none fixed inset-0 z-0" />
+        )}
         <Header />
-        <JourneyRail />
-        <div className="relative z-10">
-          <Hero />
-          <About />
-          <Skills />
-          <TechMarquee />
-          <Experience />
-          <Projects />
-          <Certificates />
-          <Resume />
-          <Contact />
-        </div>
+        <main className="story-stack relative z-10">
+          <StoryChapter z={1}><Hero /></StoryChapter>
+          <StoryChapter z={2}><About /></StoryChapter>
+          <StoryChapter z={3}><Skills /></StoryChapter>
+          <StoryChapter z={4}><Experience /></StoryChapter>
+          <StoryChapter z={5} pin><Projects /></StoryChapter>
+          <StoryChapter z={6}><Certificates /></StoryChapter>
+          <StoryChapter z={7}><Resume /></StoryChapter>
+          <StoryChapter z={8}><Contact /></StoryChapter>
+        </main>
         <ScrollToTop />
       </div>
+    </>
+  );
+}
+
+function App() {
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const sync = () => setPath(window.location.pathname);
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
+
+  return (
+    <ThemeProvider>
+      <div hidden={path === '/certificates'}>
+        <Shell />
+      </div>
+      {path === '/certificates' && <CertificatesPage />}
     </ThemeProvider>
   );
 }

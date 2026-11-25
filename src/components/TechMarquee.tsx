@@ -3,25 +3,8 @@
  * separated by ember spark diamonds. Two rows drift in opposite directions.
  * Pure CSS marquee; respects prefers-reduced-motion via index.css.
  */
-const ROW_A = [
-  'PYTHON',
-  'TENSORFLOW',
-  'PYTORCH',
-  'SCIKIT-LEARN',
-  'OPENCV',
-  'PANDAS',
-  'NUMPY',
-];
-
-const ROW_B = [
-  'REACT',
-  'NODE.JS',
-  'FLASK',
-  'DOCKER',
-  'MONGODB',
-  'STREAMLIT',
-  'KERAS',
-];
+const ROW_A = ['PYTHON', 'PYTORCH', 'LANGCHAIN', 'RAG', 'FASTAPI', 'YOLO', 'PANDAS'];
+const ROW_B = ['REACT', 'DOCKER', 'POSTGRES', 'MONGODB', 'CHROMADB', 'LINUX', 'JAVA'];
 
 const Spark = () => (
   <span className="tm-spark" aria-hidden>

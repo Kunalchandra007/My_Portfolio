@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Mail, Phone, MapPin, Send, Linkedin, Github, Twitter } from 'lucide-react';
+import { Mail, MapPin, Send, Linkedin, Github, Twitter } from 'lucide-react';
 import SectionHeader from './story/SectionHeader';
 import Reveal from './story/Reveal';
+import SocialLink from './SocialLink';
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -47,15 +48,35 @@ const Contact = () => {
     'w-full rounded-lg border border-hairline bg-surface-2 px-4 py-3 text-ink placeholder-ink-faint transition-all duration-300 focus:border-nebula-soft/50 focus:outline-none focus:ring-2 focus:ring-nebula/40';
 
   const infoRows = [
-    { icon: <Mail className="h-6 w-6 text-ice" />, label: 'Email', value: 'kunalworkrelated@gmail.com' },
-    { icon: <Phone className="h-6 w-6 text-ice" />, label: 'Phone', value: '+91 9911566654', mono: true },
-    { icon: <MapPin className="h-6 w-6 text-ice" />, label: 'Location', value: 'Haridwar, Uttarakhand, India' },
+    { icon: <Mail className="h-6 w-6 text-nebula" />, label: 'SMTP', value: 'kunalchandra2506@gmail.com' },
+    { icon: <MapPin className="h-6 w-6 text-nebula" />, label: 'localhost', value: 'New Delhi, IN' },
   ];
 
   const socials = [
-    { href: 'https://www.linkedin.com/in/kunal-chandra007', icon: <Linkedin size={22} />, label: 'LinkedIn' },
-    { href: 'https://github.com/Kunalchandra007', icon: <Github size={22} />, label: 'GitHub' },
-    { href: 'https://x.com/KunalChandra777', icon: <Twitter size={22} />, label: 'Twitter' },
+    {
+      href: 'https://www.linkedin.com/in/kunal-chandra007',
+      icon: () => <Linkedin size={22} />,
+      label: 'LinkedIn',
+      handle: 'in/kunal-chandra007',
+      role: 'Software Engineer',
+      cta: 'Connect on LinkedIn',
+    },
+    {
+      href: 'https://github.com/Kunalchandra007',
+      icon: () => <Github size={22} />,
+      label: 'GitHub',
+      handle: 'Kunalchandra007',
+      role: 'Software Engineer',
+      cta: 'Follow on GitHub',
+    },
+    {
+      href: 'https://x.com/KunalChandra777',
+      icon: () => <Twitter size={22} />,
+      label: 'X',
+      handle: '@KunalChandra777',
+      role: 'Software Engineer',
+      cta: 'Follow on X',
+    },
   ];
 
   return (
@@ -63,10 +84,8 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
-            index="08"
-            label="Open Channel"
-            title="Get In Touch"
-            subtitle="I'm always open to discussing new opportunities, collaborations, or just having a chat about data science and technology."
+            title="Let’s build something"
+            subtitle="Internships, collabs, or a bug you can’t crack. I reply to every message."
             align="center"
           />
         </Reveal>
@@ -76,11 +95,10 @@ const Contact = () => {
           <Reveal>
             <div className="space-y-8">
               <div>
-                <h3 className="mb-4 font-serif text-2xl text-ink">Let's Connect</h3>
+                <h3 className="mb-4 font-serif text-2xl italic text-ink">ping me</h3>
                 <p className="leading-relaxed text-ink-dim">
-                  Feel free to reach out to me for any inquiries, project collaborations, or just to
-                  say hello. I'm always excited to connect with fellow{' '}
-                  <span className="text-ice">data enthusiasts</span> and professionals.
+                  Got an idea, a project, or an open role? Say hello and I’ll get back to you.
+                  Always up for talking to builders, researchers, and anyone shipping real AI.
                 </p>
               </div>
 
@@ -89,27 +107,23 @@ const Contact = () => {
                   <div key={row.label} className="flex items-center gap-4">
                     <div className="rounded-full border border-hairline bg-nebula/10 p-3">{row.icon}</div>
                     <div>
-                      <h4 className="telemetry text-[0.6rem] text-ink-faint">{row.label}</h4>
-                      <p className={`text-ink ${row.mono ? 'font-mono text-sm' : ''}`}>{row.value}</p>
+                      <h4 className="font-mono text-[0.68rem] tracking-wide text-ink-faint">{row.label}</h4>
+                      <p className="text-ink">{row.value}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               <div className="pt-4">
-                <h4 className="telemetry mb-4 text-[0.6rem] text-ink-faint">Follow Me</h4>
+                <h4 className="mb-4 font-mono text-[0.68rem] tracking-wide text-ink-faint">find me on</h4>
                 <div className="flex gap-4">
                   {socials.map((s) => (
-                    <a
+                    <SocialLink
                       key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.label}
-                      className="rounded-full border border-hairline bg-surface-2 p-3 text-ink-dim transition-all duration-300 hover:-translate-y-0.5 hover:border-nebula-soft/50 hover:text-ice"
-                    >
-                      {s.icon}
-                    </a>
+                      {...s}
+                      side="up"
+                      className="bg-surface-2 group-hover:border-nebula-soft/50 group-hover:text-ice"
+                    />
                   ))}
                 </div>
               </div>
@@ -119,11 +133,11 @@ const Contact = () => {
           {/* Contact form */}
           <Reveal delay={1}>
             <div className="panel p-8">
-              <h3 className="mb-6 font-serif text-2xl text-ink">Send Message</h3>
+              <h3 className="mb-6 font-serif text-2xl text-ink">Open a new issue</h3>
               <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-ink-dim">
-                    Full Name
+                  <label htmlFor="name" className="mb-2 block font-mono text-sm text-ink-dim">
+                    name
                   </label>
                   <input
                     type="text"
@@ -133,13 +147,13 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className={inputClass}
-                    placeholder="Your full name"
+                    placeholder="who’s this?"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-ink-dim">
-                    Email Address
+                  <label htmlFor="email" className="mb-2 block font-mono text-sm text-ink-dim">
+                    reply-to
                   </label>
                   <input
                     type="email"
@@ -154,8 +168,8 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="mb-2 block text-sm font-medium text-ink-dim">
-                    Message
+                  <label htmlFor="message" className="mb-2 block font-mono text-sm text-ink-dim">
+                    payload
                   </label>
                   <textarea
                     id="message"
@@ -165,7 +179,7 @@ const Contact = () => {
                     required
                     rows={6}
                     className={`${inputClass} resize-none`}
-                    placeholder="Tell me about your project or just say hello..."
+                    placeholder="Tell me what you’re building, or just say hello, world."
                   />
                 </div>
 
@@ -184,14 +198,14 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 font-medium transition-all duration-300 ${
+                  className={
                     isSubmitting
-                      ? 'cursor-not-allowed border border-hairline bg-surface-2 text-ink-faint'
-                      : 'bg-gradient-to-r from-nebula to-nebula-soft text-white shadow-[0_0_28px_-6px_rgba(139,92,246,0.7)] hover:brightness-110 hover:shadow-[0_0_36px_-4px_rgba(139,92,246,0.9)]'
-                  }`}
+                      ? 'inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border border-hairline bg-surface-2 px-6 py-3 text-ink-faint'
+                      : 'btn-primary w-full'
+                  }
                 >
                   <Send size={20} />
-                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                  <span>{isSubmitting ? 'pushing...' : 'git push'}</span>
                 </button>
               </form>
             </div>

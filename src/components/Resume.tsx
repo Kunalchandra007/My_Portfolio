@@ -7,10 +7,8 @@ const Resume = () => (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Reveal>
         <SectionHeader
-          index="07"
-          label="Dossier"
           title="Resume"
-          subtitle="Download my resume to learn more about my experience, skills, and accomplishments."
+          subtitle="The one-page version of the work above, updated 27 September 2026."
           align="center"
         />
       </Reveal>
@@ -31,19 +29,19 @@ const Resume = () => (
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <a
-              href="/Kunal%20Chandra%20Resume%20till%204th%20July.pdf"
-              download="Kunal_Chandra_Resume_till_4th_July.pdf"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-nebula to-nebula-soft px-8 py-3 font-medium text-white shadow-[0_0_28px_-6px_rgba(139,92,246,0.7)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_36px_-4px_rgba(139,92,246,0.9)]"
+              href="/Kunal-Chandra-Resume.pdf"
+              download="Kunal_Chandra_Resume.pdf"
+              className="btn-primary"
             >
               <Download size={20} />
               <span>Download Resume</span>
             </a>
 
             <a
-              href="/Kunal%20Chandra%20Resume%20till%204th%20July.pdf"
+              href="/Kunal-Chandra-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-surface-2 px-8 py-3 font-medium text-ink backdrop-blur-sm transition-all duration-300 hover:border-nebula-soft/50 hover:text-ice"
+              className="btn-ghost"
             >
               <Eye size={20} />
               <span>View Online</span>
@@ -51,7 +49,7 @@ const Resume = () => (
           </div>
 
           <p className="telemetry mt-8 text-[0.6rem] text-ink-faint">
-            PDF Format · Last Updated: 4 July 2026
+            PDF · Updated 27 September 2026
           </p>
         </div>
       </Reveal>

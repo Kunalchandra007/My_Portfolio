@@ -12,6 +12,8 @@ import {
   Mail
 } from 'lucide-react';
 import Dock from './Dock';
+import ThemeSwitch from './ThemeSwitch';
+import SiteViews from './SiteViews';
 import { navigateTo } from '../lib/navigation';
 
 const Header = () => {
@@ -28,12 +30,14 @@ const Header = () => {
         const sections = navItems
           .map((item) => ({ href: item.href, element: document.getElementById(item.href) }))
           .filter((item): item is { href: string; element: HTMLElement } => item.element !== null);
-        const current = sections.reduce((closest, section) =>
-          Math.abs(section.element.getBoundingClientRect().top - 150) < Math.abs(closest.element.getBoundingClientRect().top - 150)
-            ? section
-            : closest
-        );
-        if (current) setActiveHref(current.href);
+        const mark = window.innerHeight * 0.28;
+        let current = sections[0]?.href ?? 'home';
+        sections.forEach((section) => {
+          const chapter = section.element.closest('.story-chapter') ?? section.element;
+          const box = chapter.getBoundingClientRect();
+          if (box.top <= mark && box.bottom > mark) current = section.href;
+        });
+        setActiveHref(current);
         rafId = 0;
       });
     };
@@ -52,7 +56,7 @@ const Header = () => {
     { name: 'Skills', href: 'skills', icon: <Cpu size={18} /> },
     { name: 'Experience', href: 'experience', icon: <Briefcase size={18} /> },
     { name: 'Projects', href: 'projects', icon: <FolderKanban size={18} /> },
-    { name: 'Certificates', href: 'certificates', icon: <Award size={18} /> },
+    { name: 'Achievements', href: 'achievements', icon: <Award size={18} /> },
     { name: 'Resume', href: 'resume', icon: <FileText size={18} /> },
     { name: 'Contact', href: 'contact', icon: <Mail size={18} /> },
   ];
@@ -65,22 +69,20 @@ const Header = () => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-void/85 backdrop-blur-md border-b border-hairline'
-          : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative flex items-center justify-between py-4">
+      <header className={`site-header fixed top-0 left-0 right-0 z-50${scrolled ? ' is-scrolled' : ''}`}>
+        <div className="header-inner mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="header-bar relative flex items-center justify-between py-3">
             <button
               onClick={() => goToPage('home')}
-              className="font-serif text-2xl tracking-[0.03em] text-cosmic"
+              className="brand-name font-serif text-2xl text-ink"
             >
-              Kunal Chandra
+              Kunal <span className="text-cosmic">Chandra</span>
             </button>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden relative z-20">
+            <div className="ml-auto flex items-center gap-3 md:mr-0">
+              <ThemeSwitch />
+              <SiteViews />
+              <div className="md:hidden relative z-20">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-lg text-ink-dim transition-colors hover:bg-surface-2 hover:text-ice"
@@ -88,6 +90,7 @@ const Header = () => {
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
+              </div>
             </div>
           </div>
 

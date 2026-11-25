@@ -1,4 +1,4 @@
-import { GraduationCap, Code, Brain, Target } from 'lucide-react';
+import { GraduationCap, Code, Brain } from 'lucide-react';
 import SectionHeader from './story/SectionHeader';
 import Reveal from './story/Reveal';
 
@@ -6,90 +6,79 @@ const About = () => {
   const highlights = [
     {
       icon: <GraduationCap className="h-5 w-5" />,
-      label: 'EDU · 01',
+      label: '2023 — 2027',
       title: 'B.Tech CSE',
-      description: 'Computer Science and Engineering at Haridwar University',
+      description: 'Haridwar University · CGPA 7.7',
     },
     {
       icon: <GraduationCap className="h-5 w-5" />,
-      label: 'EDU · 02',
-      title: 'Minor in AI & DS',
-      description: 'Artificial Intelligence & Data Science from IIT Mandi',
+      label: '2025 — 2026',
+      title: 'Minor, AI & DS',
+      description: 'IIT Mandi · CGPA 9.25',
     },
     {
       icon: <Brain className="h-5 w-5" />,
-      label: 'FOCUS',
-      title: 'Passion',
-      description: 'Data Science & Machine Learning Enthusiast with hands-on experience',
+      label: 'School',
+      title: 'Sam International School',
+      description: 'Class X 94% · Class XII 80%',
     },
     {
       icon: <Code className="h-5 w-5" />,
-      label: 'ACTIVE',
-      title: 'Learning',
-      description:
-        'Currently practicing Data Structures and Algorithms in Java and Mastering Data Science',
-    },
-    {
-      icon: <Target className="h-5 w-5" />,
-      label: 'VECTOR',
-      title: 'Goal',
-      description: 'Aspiring to become a skilled Data Scientist',
+      label: 'Practice',
+      title: '500+ DSA problems solved',
+      description: 'Highest rating — 1776',
     },
   ];
 
   return (
     <section id="about" className="relative overflow-hidden py-28">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-void via-surface/20 to-void" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-void via-surface/20 to-void dark:hidden" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          index="02"
-          label="The Navigator"
-          coord="Haridwar, IN"
-          title={<>Who&apos;s at the <span className="text-cosmic">helm</span></>}
-          subtitle="Passionate about leveraging data to solve real-world problems and create meaningful impact through technology."
+          title={<>A student who <span className="italic text-cosmic">ships</span></>}
+          subtitle="Data science and machine learning, applied to systems that people actually use."
         />
 
-        <div className="mt-16 grid items-start gap-12 lg:grid-cols-2">
-          <Reveal className="lg:sticky lg:top-28">
-            <div className="relative">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-nebula/20 via-transparent to-ice/20 blur-2xl" />
-              <div className="panel relative overflow-hidden rounded-2xl p-1.5">
-                <img
-                  src="/Mypicstanding.jpeg"
-                  alt="About Kunal"
-                  className="h-auto max-h-[620px] w-full rounded-xl object-cover object-center"
-                />
-              </div>
-            </div>
-          </Reveal>
+        <div className="about-layout mt-16">
+          <figure className="about-figure panel p-1.5">
+            <img
+              src="/forportfolio.jpg"
+              alt="Kunal Chandra standing in a marble lobby"
+              className="about-photo"
+            />
+          </figure>
 
-          <div className="space-y-6">
+          <div className="about-side">
             <Reveal delay={1}>
-              <p className="text-lg leading-relaxed text-ink-dim">
-                I&apos;m a dedicated Computer Science Engineering student at Haridwar University
-                with a deep passion for
-                <span className="text-ice"> Data Science</span> and{' '}
-                <span className="text-nebula-soft">Machine Learning</span>. My journey in
-                technology is driven by curiosity and the desire to create innovative solutions
-                that make a difference.
+              <p className="font-serif text-3xl italic text-ink">Hi, I&apos;m Kunal.</p>
+              <p className="mt-4 text-lg leading-relaxed text-ink-dim">
+                I&apos;m a computer science student from New Delhi who loves turning slow, messy
+                problems into simple, working solutions. I like understanding how things work,
+                then building something people can actually use.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-ink-dim">
+                I&apos;m studying at Haridwar University, with a minor in AI &amp; Data Science at
+                IIT Mandi. Alongside my studies, I&apos;ve interned at organisations where the work
+                had real users and real deadlines, and that taught me to care about what happens
+                after the demo.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-ink-dim">
+                I learn by building. I take part in hackathons, start projects for the fun of it,
+                and practise problem solving regularly to keep my thinking sharp.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-ink-dim">
+                When I&apos;m not building, I&apos;m usually looking for the next thing to learn.
+              </p>
+              <p className="mt-5 text-lg leading-relaxed text-ink">
+                Currently: open to internships, full-time roles, and projects where I can build
+                things that matter.
               </p>
             </Reveal>
 
-            <Reveal delay={2}>
-              <p className="text-lg leading-relaxed text-ink-dim">
-                Currently pursuing a{' '}
-                <span className="text-nebula-soft">Minor in AI &amp; DS from IIT Mandi</span>, I&apos;m
-                expanding my expertise in
-                <span className="text-nebula-soft"> Data Structures and Algorithms</span> using Java
-                while simultaneously exploring advanced machine learning concepts. I believe in
-                continuous learning and applying theoretical knowledge to practical projects.
-              </p>
-            </Reveal>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="about-highlights">
               {highlights.map((item, index) => (
-                <Reveal key={item.title} delay={3 + index}>
+                <Reveal key={item.title} delay={3 + index} className="about-card">
                   <div className="panel panel-hover group h-full p-5">
                     <div className="flex items-center justify-between">
                       <span className="rounded-lg border border-hairline bg-surface-2 p-2 text-nebula-soft transition-colors duration-300 group-hover:text-ice">

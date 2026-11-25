@@ -8,24 +8,31 @@
     <meta name="author" content="Kunal Chandra" />
     <link rel="canonical" href="https://kunalchandra.dev/" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#0a0612" />
+    <meta name="theme-color" content="#e8e0d2" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,620;1,9..144,500&family=Outfit:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <meta property="og:title" content="Kunal Chandra | Data Scientist and ML Engineer Portfolio" />
+    <script>
+      try {
+        if (localStorage.getItem('kc-theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+    <meta property="og:title" content="Kunal Chandra | Software Engineer" />
     <meta property="og:description" content="Portfolio of Kunal Chandra, a Haridwar University CSE student building projects in data science, machine learning, DSA, and software development." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kunalchandra.dev/" />
-    <meta property="og:image" content="https://kunalchandra.dev/pfp.jpg" />
+    <meta property="og:image" content="https://kunalchandra.dev/mewithtiecropped.jpg" />
     <meta property="og:site_name" content="Kunal Chandra" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Kunal Chandra | Data Scientist and ML Engineer Portfolio" />
+    <meta name="twitter:title" content="Kunal Chandra | Software Engineer" />
     <meta name="twitter:description" content="Portfolio of Kunal Chandra with projects, experience, skills, and resume focused on data science and machine learning." />
-    <meta name="twitter:image" content="https://kunalchandra.dev/pfp.jpg" />
-    <title>Kunal Chandra | Data Scientist and ML Engineer Portfolio</title>
+    <meta name="twitter:image" content="https://kunalchandra.dev/mewithtiecropped.jpg" />
+    <title>Kunal Chandra | Software Engineer</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -35,14 +42,13 @@
             "@id": "https://kunalchandra.dev/#person",
             "name": "Kunal Chandra",
             "url": "https://kunalchandra.dev/",
-            "image": "https://kunalchandra.dev/pfp.jpg",
-            "jobTitle": "Aspiring Data Scientist and Machine Learning Engineer",
+            "image": "https://kunalchandra.dev/mewithtiecropped.jpg",
+            "jobTitle": "Software Engineer",
             "description": "Computer Science Engineering student at Haridwar University focused on data science, machine learning, DSA, and software development.",
-            "email": "mailto:kunalworkrelated@gmail.com",
-            "telephone": "+91 9911566654",
+            "email": "mailto:kunalchandra2506@gmail.com",
             "homeLocation": {
               "@type": "Place",
-              "name": "Haridwar, Uttarakhand, India"
+              "name": "New Delhi, India"
             },
             "alumniOf": {
               "@type": "CollegeOrUniversity",
@@ -69,7 +75,7 @@
             "@type": "WebPage",
             "@id": "https://kunalchandra.dev/#webpage",
             "url": "https://kunalchandra.dev/",
-            "name": "Kunal Chandra | Data Scientist and ML Engineer Portfolio",
+            "name": "Kunal Chandra | Software Engineer",
             "isPartOf": {
               "@id": "https://kunalchandra.dev/#website"
             },
@@ -80,46 +86,8 @@
         ]
       }
     </script>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-
-      /* Custom scrollbar — nebula */
-      ::-webkit-scrollbar {
-        width: 9px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: #0d0717;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #8b5cf6, #c084fc);
-        border-radius: 4px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, #a78bfa, #e9d5ff);
-      }
-
-      ::selection {
-        background: rgba(139, 92, 246, 0.35);
-        color: #f4f2ff;
-      }
-
-      /* Futuristic glow effects */
-      @keyframes glow {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-
-      .animate-glow {
-        animation: glow 2s ease-in-out infinite;
-      }
-    </style>
   </head>
-  <body class="bg-[#0a0612]">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
